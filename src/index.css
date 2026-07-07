@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+@import "tailwindcss";
+
+:root{
+
+--background:#FFF8F2;
+
+--gold:#D4AF37;
+
+--rose:#B76E79;
+
+--green:#40513B;
+
+--white:#ffffff;
+
+--text:#3A3A3A;
+
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  padding:0;
+  font-family:"Poppins",sans-serif;
+  background:#FFF8F2;
+  overflow-x:hidden;
+}
+
+.font-script {
+  font-family: "Great Vibes", cursive;
+}
+
+.font-heading {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.font-body {
+  font-family: "Poppins", sans-serif;
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.perspective-1000 {
+  perspective: 1600px;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(210,169,107,.35);
+  border-radius: 999px;
+}
