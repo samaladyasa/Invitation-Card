@@ -2,7 +2,7 @@
 
 A beautiful, interactive digital wedding invitation website built with modern web technologies. This project showcases a seamless user experience with animations, interactive elements, and responsive design.
 
-**Project by:** [Tekkzy Intelligent Solutions Company](https://tekkzy.com)
+**Project by:** [Adyasa Anusaya Samal]
 
 ## ✨ Features
 
@@ -141,12 +141,7 @@ npm run build
 
 ## 📄 License
 
-This project is created for Tekkzy Intelligent Solutions Company. All rights reserved.
-
-## 👥 About Tekkzy
-
-Tekkzy Intelligent Solutions Company specializes in creating beautiful, interactive web experiences for life's special moments. This wedding invitation template demonstrates our expertise in modern web development and user experience design.
-
+This project is created for Tekkzy Intelligent Solutions. All rights reserved.
 ---
 
-**Made with ❤️ by Tekkzy Intelligent Solutions**
+**Made with ❤️ by Adyasa**
