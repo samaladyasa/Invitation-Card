@@ -17,7 +17,7 @@ const weddingData = {
 
     time: "7:00 PM",
 
-    venue: "The Grand Palace, Mumbai",
+    venue: "Mayfair Lagoon",
 
     closing: "With Love & Gratitude ❤️",
   },
