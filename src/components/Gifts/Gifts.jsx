@@ -7,6 +7,7 @@ export default function Gifts() {
   const cardRef = useRef(null);
   const drawing = useRef(false);
   const revealed = useRef(false);
+  const lastPoint = useRef(null);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -47,14 +48,29 @@ export default function Gifts() {
   const scratch = (e) => {
     if (!drawing.current || revealed.current) return;
 
+    e.preventDefault();
+
     const c = canvasRef.current;
     const ctx = c.getContext("2d");
     const { x, y } = point(e);
 
     ctx.globalCompositeOperation = "destination-out";
-    ctx.beginPath();
-    ctx.arc(x, y, 42, 0, Math.PI * 2);
-    ctx.fill();
+    ctx.lineWidth = 44;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    if (lastPoint.current) {
+      ctx.beginPath();
+      ctx.moveTo(lastPoint.current.x, lastPoint.current.y);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+    } else {
+      ctx.beginPath();
+      ctx.arc(x, y, 24, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    lastPoint.current = { x, y };
     ctx.globalCompositeOperation = "source-over";
 
     const img = ctx.getImageData(0, 0, c.width, c.height).data;
@@ -63,7 +79,7 @@ export default function Gifts() {
     for (let i = 3; i < img.length; i += 4)
       if (img[i] < 20) clear++;
 
-    if ((clear / (img.length / 4)) * 100 > 30) {
+    if ((clear / (img.length / 4)) * 100 > 20) {
       revealed.current = true;
       setShow(true);
 
@@ -138,17 +154,32 @@ export default function Gifts() {
               className="absolute inset-0 cursor-pointer touch-none"
               onMouseDown={(e) => {
                 drawing.current = true;
+                lastPoint.current = null;
                 scratch(e);
               }}
               onMouseMove={scratch}
-              onMouseUp={() => (drawing.current = false)}
-              onMouseLeave={() => (drawing.current = false)}
+              onMouseUp={() => {
+                drawing.current = false;
+                lastPoint.current = null;
+              }}
+              onMouseLeave={() => {
+                drawing.current = false;
+                lastPoint.current = null;
+              }}
               onTouchStart={(e) => {
                 drawing.current = true;
+                lastPoint.current = null;
                 scratch(e);
               }}
               onTouchMove={scratch}
-              onTouchEnd={() => (drawing.current = false)}
+              onTouchEnd={() => {
+                drawing.current = false;
+                lastPoint.current = null;
+              }}
+              onTouchCancel={() => {
+                drawing.current = false;
+                lastPoint.current = null;
+              }}
             />
           </div>
         </div>
