@@ -29,7 +29,7 @@ export default function InvitationReveal({ onComplete }) {
         <div className="mx-auto my-8 h-px w-32 bg-[#D2A96B]" />
 
         <p className="text-sm leading-7 text-[#6F6060]">
-          We are delighted to invite you to our wedding celebration.
+          We are delighted to invite you to the wedding ceremony of Alisha, daughter of Mr. and Mrs. Sharma, and Anirudh, son of Mr. and Mrs. Singh.
           Your presence will make our special day even more memorable.
         </p>
 
