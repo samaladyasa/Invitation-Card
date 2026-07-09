@@ -1,23 +1,32 @@
 import { useState } from "react";
 
 import Intro from "./components/Intro/Intro";
-import Landing from "./components/Landing/Landing";
 import Home from "./pages/Home";
 
 export default function App() {
-  const [stage, setStage] = useState("intro");
+  const [showIntro, setShowIntro] = useState(true);
+  const [fadeAtSeconds] = useState(1.0);
+  const [homeFadingIn, setHomeFadingIn] = useState(false);
 
   return (
     <>
-      {stage === "intro" && (
-        <Intro onFinish={() => setStage("landing")} />
-      )}
+      <div
+        className="app-home-wrapper"
+        style={{
+          opacity: homeFadingIn ? 1 : 0,
+          transition: "opacity 1200ms ease-in-out",
+        }}
+      >
+        <Home />
+      </div>
 
-      {stage === "landing" && (
-        <Landing onComplete={() => setStage("home")} />
+      {showIntro && (
+        <Intro
+          fadeAtSeconds={fadeAtSeconds}
+          onRevealStart={() => setHomeFadingIn(true)}
+          onFinish={() => setShowIntro(false)}
+        />
       )}
-
-      {stage === "home" && <Home />}
     </>
   );
 }

@@ -2,23 +2,30 @@ const weddingData = {
   hero: {
     bride: "Alisha",
     groom: "Anirudh",
-    date: "15 December 2026",
-    invitation: "Together with our families",
+    date: "Tuesday, {15 December 2026}",
+    invitation: "",
     buttonText: "Open Invitation",
   },
 
   invitation: {
+    mantra: "॥ ॐ गं गणपतये नमः ॥",
+
     title: "Wedding Invitation",
 
     message:
-      "Together with our families, we joyfully invite you to celebrate our wedding and bless us with your presence on this beautiful occasion.",
+      "We joyfully invite you to the wedding of",
+
+    brideRole: "Daughter of",
+
+    brideParents: "Mr and Mrs Sharma",
+
+    groomRole: "Son of",
+
+    groomParents: "Mr and Mrs Singh",
 
     date: "15 December 2026",
-
     time: "7:00 PM",
-
     venue: "Mayfair Lagoon",
-
     closing: "With Love & Gratitude ❤️",
   },
 };

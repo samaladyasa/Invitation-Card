@@ -1,45 +1,127 @@
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap");
 
 @import "tailwindcss";
 
-:root{
+/* ── Classic Indian Red & Gold ──
+   Deep dramatic dark + sindoor vermillion + rich jewelry gold
+   Reference uses muted maroon #3E1620 + brownish gold #c9a96e
+   Ours: near-black #0D0A0A + saturated gold #D4A529 + sindoor red #B22234
+   ──────────────────────────────────────────────────────────── */
+:root {
+  /* Global pastel rose-ivory palette */
+  --bg-deep: #FFF6F8; /* baby pink background */
+  --bg-base: #FFEFF3; /* soft baby pink base */
+  --bg-mid: #FFDDE4; /* light blush mid */
+  --bg-card: #FFF8FA; /* card background */
 
---background:#FFF8F2;
+  --accent-pink: #F3AEB7; /* pastel baby pink accent */
+  --accent-pink-2: #FF7B96; /* stronger pink highlight */
+  --accent-sand: #FFF7F8; /* ivory-sand */
 
---gold:#D4AF37;
-
---rose:#B76E79;
-
---green:#40513B;
-
---white:#ffffff;
-
---text:#3A3A3A;
-
+  --text-primary: #3A2E30; /* readable warm dark */
+  --text-secondary: #F3AEB7;
+  --text-muted: #A87F85;
+  --border-accent: rgba(243,174,183,0.16);
+  --glow-1: var(--accent-pink-2);
+  --glow-2: var(--accent-pink);
+  --vignette-color: rgba(200,160,163,0.9);
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  margin:0;
-  padding:0;
-  font-family:"Poppins",sans-serif;
-  background:#FFF8F2;
-  overflow-x:hidden;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  letter-spacing: 0.0025em;
+  word-spacing: 0.08em;
+  text-rendering: optimizeLegibility;
 }
 
 .font-script {
   font-family: "Great Vibes", cursive;
 }
 
+.reveal-container {
+  display: inline-block;
+  line-height: 1.25;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+}
+
+.reveal-word {
+  display: inline-block;
+  transform: translateY(12px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 380ms ease;
+  transition-delay: calc(var(--i) * 0.035s);
+}
+
+.reveal-container.is-revealed .reveal-word {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.reveal-container .reveal-word strong,
+.reveal-container .reveal-word b {
+  transition-duration: 520ms;
+}
+
+.reveal-container h1 .reveal-word,
+.reveal-container h2 .reveal-word,
+.reveal-container h3 .reveal-word {
+  letter-spacing: 0.02em;
+}
+
+.no-reveal { opacity: 1 !important; transform: none !important; }
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.01em;
+  word-spacing: 0.1em;
+}
+
+p, li, button, label {
+  letter-spacing: 0.0025em;
+  word-spacing: 0.07em;
+  line-height: 1.55;
+}
+
 .font-heading {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Playfair Display", serif;
 }
 
 .font-body {
   font-family: "Poppins", sans-serif;
+}
+
+/* Mandala background pattern */
+.mandala-bg {
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(178, 34, 52, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 50%, rgba(212, 165, 41, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 50% 20%, rgba(255, 153, 51, 0.05) 0%, transparent 50%);
+}
+
+/* Paisley accent overlay */
+.paisley-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(ellipse 80px 120px at 10% 20%, rgba(212, 165, 41, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 80px 120px at 90% 80%, rgba(212, 165, 41, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60px 100px at 50% 10%, rgba(178, 34, 52, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 @keyframes floatCard {
@@ -56,23 +138,379 @@ body{
   }
 }
 
+@keyframes blobMorph {
+
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes shimmerGold {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes shimmerSilvery {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+
+  50% {
+    border-radius: 50% 60% 30% 60% / 30% 50% 70% 50%;
+  }
+
+  75% {
+    border-radius: 60% 30% 60% 40% / 70% 50% 40% 60%;
+  }
+}
+
+@keyframes floatGentle {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .perspective-1000 {
   perspective: 1600px;
 }
 
-body {
-  overflow-x: hidden;
+.blob-shape {
+  animation: blobMorph 8s ease-in-out infinite;
+}
+
+.float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg,
+      rgba(255,123,150,0.95) 0%,
+      var(--accent-pink-2) 25%,
+      var(--accent-pink) 50%,
+      var(--accent-pink-2) 75%,
+      rgba(255,123,150,0.95) 100%);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.mandala-spinner {
+  animation: spin-slow 30s linear infinite;
 }
 
 ::-webkit-scrollbar {
+  width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-deep);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(210,169,107,.35);
+  background: rgba(212, 165, 41, 0.35);
   border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 165, 41, 0.55);
+}
+
+/* Gold border glow effect */
+.gold-border-glow {
+  box-shadow:
+    0 0 22px rgba(243,174,183,0.12),
+    inset 0 0 14px rgba(243,174,183,0.04);
+}
+
+/* Section styling */
+.indian-section {
+  position: relative;
+  background: var(--bg-base);
+}
+
+.indian-card {
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-base));
+  border: 1px solid var(--border-gold);
+  backdrop-filter: blur(10px);
+}
+
+@keyframes shimmer {
+
+0%{
+transform:translateX(-120%);
+}
+
+100%{
+transform:translateX(120%);
+}
+
+}
+
+
+.animate-shimmer{
+
+animation:
+shimmer 2s ease forwards;
+
+}
+@keyframes fade-in-slow { 0% { opacity: 0; } 100% { opacity: 1; } }
+.animate-fade-in-slow { animation: fade-in-slow 1.5s ease-in-out forwards; }
+
+@keyframes invite-float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes invite-glow {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.invite-page {
+  background:
+    radial-gradient(circle at top, rgba(102,224,214,0.10), transparent 38%),
+    radial-gradient(circle at bottom, rgba(255,94,87,0.06), transparent 42%),
+    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
+}
+
+/* Global overrides for hard-coded Tailwind utility colors to align with pastel rose theme */
+.bg-\[\#0D0A0A\] { background-color: var(--bg-deep) !important; }
+.bg-\[\#2A1518\] { background-color: var(--bg-mid) !important; }
+.from-\[\#2A1518\] { background-image: none !important; background-color: var(--bg-mid) !important; }
+.to-\[\#0D0A0A\] { background-image: none !important; background-color: var(--bg-base) !important; }
+.bg-\[\#0A0705\] { background-color: var(--bg-deep) !important; }
+.border-\[\#D4A529\] { border-color: var(--border-accent) !important; }
+.text-\[\#D4A529\] { color: var(--accent-pink) !important; }
+.bg-gradient-to-b.from-\[\#2A1518\] { background-image: none !important; background-color: var(--bg-mid) !important; }
+.rounded-3xl { background-color: var(--bg-card) !important; }
+.bg-\[\#0D0A0A\]\/70 { background-color: color-mix(in srgb, var(--bg-deep) 70%, transparent) !important; }
+
+/* Make utility text-white readable on light background by using dark text */
+.text-white { color: var(--text-primary) !important; }
+
+/* Ensure heading/gold-like text maps to accent pink for premium look */
+.text-\[\#D4A529\] { color: var(--accent-pink-2) !important; }
+
+/* Catch text utilities that include opacity suffixes, e.g. text-[#D4A529]/70 */
+[class*="text-[#D4A529]"] {
+  color: var(--accent-pink-2) !important;
+}
+
+/* More overrides for other dark hex utilities found in the codebase */
+.bg-\[\#1C1012\] { background-color: var(--bg-mid) !important; }
+.bg-\[\#0A0705\] { background-color: var(--bg-deep) !important; }
+.bg-\[\#1C1012\]\/60 { background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important; }
+.from-\[\#2A1518\]\/60 { background-image: none !important; background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important; }
+.border-\[\#D4A529\]\/20 { border-color: color-mix(in srgb, var(--border-accent) 20%, transparent) !important; }
+.hover\:bg-\[\#D4A529\] { background-color: var(--accent-pink) !important; }
+
+/* Scoped preview theme: apply by adding `ref-theme` to a page wrapper */
+.ref-theme {
+  /* Pastel premium — lighter, rich pastel pinks */
+  --ref-bg-deep: #F7EEF1; /* very light blush */
+  --ref-bg-base: #F4DCE0; /* soft rose base */
+  --ref-bg-mid: #EECED1; /* muted pink mid */
+  --ref-card: #F0D7DB; /* card background */
+
+  --ref-accent: #E8AEB3; /* pastel steel pink accent */
+  --ref-accent-2: #FF8CA3; /* coral-pink highlight */
+  --ref-sand: #FFF8F9; /* light warm sand */
+}
+
+/* Override common hard-coded Tailwind classes inside the scoped theme for preview */
+.ref-theme [class*="bg-[#0D0A0A]"] {
+  background-color: var(--ref-bg-deep) !important;
+}
+.ref-theme [class*="bg-[#2A1518]"] {
+  background-color: var(--ref-bg-mid) !important;
+}
+.ref-theme [class*="from-[#2A1518]"] {
+  background-image: none !important;
+  background-color: var(--ref-bg-mid) !important;
+}
+.ref-theme [class*="to-[#0D0A0A]"] {
+  background-image: none !important;
+  background-color: var(--ref-bg-base) !important;
+}
+.ref-theme [class*="border-[#D4A529]"] {
+  border-color: var(--ref-accent) !important;
+}
+.ref-theme [class*="text-[#D4A529]"] {
+  color: var(--ref-accent) !important;
+}
+.ref-theme .rounded-3xl {
+  background-color: var(--ref-card) !important;
+}
+
+.invite-vignette {
+  background:
+    radial-gradient(circle at center, transparent 38%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+.invite-flourish::before,
+.invite-flourish::after {
+  content: '';
+  position: absolute;
+  width: min(22vw, 240px);
+  height: min(22vw, 240px);
+  border: 1px solid rgba(212, 165, 41, 0.16);
+  border-radius: 999px;
+  filter: blur(0.2px);
+  pointer-events: none;
+  animation: invite-glow 6s ease-in-out infinite;
+}
+
+.invite-flourish::before {
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.invite-flourish::after {
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.invite-flourish-top::before {
+  box-shadow:
+    -8rem 2rem 0 -5.5rem rgba(212, 165, 41, 0.14),
+    8rem 2rem 0 -5.5rem rgba(212, 165, 41, 0.14);
+}
+
+.invite-flourish-bottom::after {
+  box-shadow:
+    -8rem -2rem 0 -5.5rem rgba(178, 34, 52, 0.12),
+    8rem -2rem 0 -5.5rem rgba(178, 34, 52, 0.12);
+}
+
+.reveal-container {
+  display: inline-block;
+  line-height: 1.25;
+  vertical-align: middle;
+  letter-spacing: 0.01em;
+}
+
+.reveal-word {
+  display: inline-block;
+  transform: translateY(12px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 380ms ease;
+  transition-delay: calc(var(--i) * 0.035s);
+}
+
+.reveal-container.is-revealed .reveal-word {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.reveal-container .reveal-word strong,
+.reveal-container .reveal-word b {
+  transition-duration: 520ms;
+}
+
+.reveal-container h1 .reveal-word,
+.reveal-container h2 .reveal-word,
+.reveal-container h3 .reveal-word {
+  letter-spacing: 0.02em;
+}
+
+.no-reveal { opacity: 1 !important; transform: none !important; }
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: 0.01em;
+  word-spacing: 0.1em;
+}
+
+p, li, button, label {
+  letter-spacing: 0.0025em;
+  word-spacing: 0.07em;
+  line-height: 1.55;
+}
+
+.invite-card {
+  animation: invite-float 8s ease-in-out infinite;
+}
+
+/* Intro / curtain overlay performance rules */
+.intro-overlay {
+  will-change: opacity, transform;
+  background-color: #000;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 1400ms cubic-bezier(0.22, 0.12, 0.36, 1), transform 1400ms cubic-bezier(0.22, 0.12, 0.36, 1);
+}
+.intro-overlay.intro--fading {
+  opacity: 0;
+  transform: translateY(-18px);
+  pointer-events: none;
+}
+
+.play-button {
+  width: 80px;
+  height: 80px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 300ms ease, transform 300ms ease;
+  will-change: opacity, transform;
+}
+.play-button.play-hidden {
+  opacity: 0;
+  /* Removed scoped preview rules — now using global overrides above */
+  pointer-events: none;
 }

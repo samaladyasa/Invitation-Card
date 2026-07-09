@@ -9,6 +9,7 @@ export default function Petals() {
       duration: 6 + Math.random() * 6,
       size: 10 + Math.random() * 14,
       rotate: Math.random() * 360,
+      type: Math.random() > 0.5 ? "marigold" : "gold",
     }));
   }, []);
 
@@ -26,7 +27,7 @@ export default function Petals() {
             y: ["0vh", "120vh"],
             rotate: [p.rotate, p.rotate + 360],
             x: [0, Math.random() * 40 - 20],
-            opacity: [0, 1, 0],
+            opacity: [0, 0.7, 0],
           }}
           transition={{
             duration: p.duration,
@@ -40,10 +41,9 @@ export default function Petals() {
               width: p.size,
               height: p.size * 1.4,
               borderRadius: "60% 40% 60% 40%",
-              background:
-                "radial-gradient(circle at 30% 30%, #F8D8DE, #D2A96B)",
+              background: p.type === "marigold" ? `radial-gradient(circle at 30% 30%, var(--accent-pink), var(--accent-pink-2))` : `radial-gradient(circle at 30% 30%, var(--accent-pink-2), rgba(212,165,41,0.6))`,
               filter: "blur(0.3px)",
-              opacity: 0.7,
+              opacity: 0.6,
             }}
           />
         </motion.div>

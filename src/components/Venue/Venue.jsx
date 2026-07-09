@@ -1,138 +1,42 @@
-import ScrollReveal from "../ScrollReveal";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { MapPin, ExternalLink, Sparkles } from "lucide-react";
+import { useRef } from "react";
 import venueData from "./venueData";
 
+function ScrollRevealText({ children, className = "", delay = 0 }) {
+  return (<motion.div initial={{ opacity: 0, y: 25, filter: "blur(6px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>);
+}
+
 export default function Venue() {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.85, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
+
   return (
-    <section
-      id="venue"
-      className="bg-[#FFF8F2] py-20 px-5 md:px-8"
-    >
-      <ScrollReveal>
-        <div className="mx-auto max-w-4xl">
-          <div className="flex justify-center pt-8">
-            <div
-              className="
-                relative
-                w-full
-                max-w-xl
-                rounded-2xl
-                bg-white
-                p-4
-                shadow-[0_25px_60px_rgba(0,0,0,0.18)]
-                transition-all
-                duration-500
-                hover:-translate-y-2
-              "
-            >
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
-                <span
-                  className="
-                    inline-block
-                    rounded-full
-                    bg-[#B76E79]
-                    px-8
-                    py-3
-                    text-xs
-                    uppercase
-                    tracking-[5px]
-                    text-white
-                    shadow-lg
-                  "
-                >
-                  Venue
-                </span>
-              </div>
-
-              <div
-                className="
-                  absolute
-                  -top-3
-                  left-12
-                  h-8
-                  w-24
-                  rounded-sm
-                  bg-[#EEDFCB]/60
-                  backdrop-blur-[1px]
-                "
-              />
-
-              <div
-                className="
-                  absolute
-                  -top-3
-                  right-12
-                  h-8
-                  w-24
-                  rounded-sm
-                  bg-[#EEDFCB]/60
-                  backdrop-blur-[1px]
-                "
-              />
-              <img
-                src="/images/venue/venue.jpg"
-                alt={venueData.name}
-                className="
-                  h-[320px]
-                  w-full
-                  rounded-xl
-                  object-cover
-                  md:h-[430px]
-                "
-              />
-              <div className="pt-6 px-2">
-
-                <h2 className="font-serif text-3xl md:text-4xl text-[#5E4C4C]">
-                  {venueData.name}
-                </h2>
-
-                <p className="mt-3 flex items-center gap-2 text-[#8A7777]">
-                  <span className="text-lg">📍</span>
-                  {venueData.location}
-                </p>
-
-                <div className="my-6 flex items-center gap-3">
-                  <span className="h-px flex-1 bg-[#D2A96B]" />
-                  <span className="text-[#D2A96B] text-lg">✦</span>
-                  <span className="h-px flex-1 bg-[#D2A96B]" />
-                </div>
-
-                <p className="leading-7 text-[#6F6060]">
-                  {venueData.address}
-                </p>
-
-                <a
-                  href={venueData.mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    mt-7
-                    inline-flex
-                    items-center
-                    gap-2
-                    rounded-full
-                    border
-                    border-[#B76E79]
-                    px-6
-                    py-3
-                    text-sm
-                    font-medium
-                    text-[#B76E79]
-                    transition-all
-                    duration-300
-                    hover:bg-[#B76E79]
-                    hover:text-white
-                  "
-                >
-                  View on Google Maps
-                  <span>↗</span>
+    <section ref={ref} id="venue" className="py-20 px-5 md:px-8" style={{ backgroundColor: 'var(--bg-deep)' }}>
+      <motion.div style={{ scale, opacity, y }} className="mx-auto max-w-4xl">
+        <div className="flex justify-center pt-8">
+          <div className="relative w-full max-w-xl rounded-2xl p-4 transition-all duration-500 hover:-translate-y-2" style={{ background: 'linear-gradient(to bottom, var(--bg-mid), var(--bg-deep))', border: '1px solid rgba(212,165,41,0.08)', boxShadow: '0 25px 60px rgba(0,0,0,0.28)' }}>
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
+              <span className="inline-block rounded-full px-8 py-3 text-xs uppercase tracking-[5px] shadow-lg" style={{ border: '1px solid rgba(0,0,0,0.06)', background: 'linear-gradient(180deg, rgba(255,230,235,0.04), rgba(255,245,247,0.00))', color: 'var(--accent-pink)', boxShadow: '0 6px 14px rgba(0,0,0,0.12)'}}>Venue</span>
+            </div>
+            <img src="/images/venue/venue.jpg" alt={venueData.name} className="h-[320px] w-full rounded-xl object-cover md:h-[430px]" />
+            <div className="pt-6 px-2">
+              <ScrollRevealText><h2 className="font-heading text-3xl md:text-4xl" style={{ color: 'var(--text-primary)' }}>{venueData.name}</h2></ScrollRevealText>
+              <ScrollRevealText delay={0.1}><p className="mt-3 flex items-center gap-2" style={{ color: 'var(--text-secondary)'}}><MapPin size={18} style={{ color: 'var(--accent-pink-2)'}} />{venueData.location}</p></ScrollRevealText>
+              <div className="my-6 flex items-center gap-3"><span className="h-px flex-1" style={{ backgroundColor: 'rgba(212,165,41,0.3)' }} /><Sparkles size={14} style={{ color: 'var(--accent-pink-2)'}} /><span className="h-px flex-1" style={{ backgroundColor: 'rgba(212,165,41,0.3)' }} /></div>
+              <ScrollRevealText delay={0.2}><p className="leading-7" style={{ color: 'var(--text-secondary)'}}>{venueData.address}</p></ScrollRevealText>
+              <ScrollRevealText delay={0.3}>
+                <a href={venueData.mapLink} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300" style={{ border: '1px solid rgba(212,165,41,0.12)', color: 'var(--accent-pink-2)', background: 'transparent' }}>
+                  View on Google Maps <ExternalLink size={14} />
                 </a>
-
-              </div>
+              </ScrollRevealText>
             </div>
           </div>
-
         </div>
-      </ScrollReveal>
+      </motion.div>
     </section>
   );
 }

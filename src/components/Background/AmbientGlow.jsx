@@ -6,7 +6,7 @@ function AmbientGlow() {
       <motion.div
         animate={{
           scale: [1, 1.08, 1],
-          opacity: [0.15, 0.3, 0.15],
+          opacity: [0.12, 0.25, 0.12],
         }}
         transition={{
           duration: 10,
@@ -14,22 +14,19 @@ function AmbientGlow() {
           ease: "easeInOut",
         }}
         className="
-          absolute
-          left-1/2
-          top-[15%]
-          h-[650px]
-          w-[650px]
+          absolute left-1/2 top-[15%]
+          h-[650px] w-[650px]
           -translate-x-1/2
           rounded-full
-          bg-[#F8DDE2]
           blur-[120px]
         "
+        style={{ backgroundColor: 'var(--glow-1)' }}
       />
 
       <motion.div
         animate={{
           scale: [1.1, 1, 1.1],
-          opacity: [0.1, 0.25, 0.1],
+          opacity: [0.08, 0.18, 0.08],
         }}
         transition={{
           duration: 14,
@@ -37,15 +34,12 @@ function AmbientGlow() {
           ease: "easeInOut",
         }}
         className="
-          absolute
-          bottom-0
-          right-0
-          h-[450px]
-          w-[450px]
+          absolute bottom-0 right-0
+          h-[450px] w-[450px]
           rounded-full
-          bg-[#FFE8C8]
           blur-[100px]
         "
+        style={{ backgroundColor: 'var(--glow-2)' }}
       />
     </>
   );

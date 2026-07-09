@@ -1,285 +1,61 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { Clock } from "lucide-react";
+import GoldDivider from "../Dividers/GoldDivider";
+
+function ScrollRevealText({ children, className = "" }) {
+  return (
+    <motion.div initial={{ opacity: 0, y: 30, filter: "blur(6px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>
+  );
+}
 
 export default function Countdown() {
   const targetDate = new Date("2026-12-15T00:00:00").getTime();
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "center center"] });
+  const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const difference = targetDate - now;
-
       setTimeLeft({
-        days: Math.max(
-          0,
-          Math.floor(difference / (1000 * 60 * 60 * 24))
-        ),
-
-        hours: Math.max(
-          0,
-          Math.floor(
-            (difference / (1000 * 60 * 60)) % 24
-          )
-        ),
-
-        minutes: Math.max(
-          0,
-          Math.floor(
-            (difference / (1000 * 60)) % 60
-          )
-        ),
-
-        seconds: Math.max(
-          0,
-          Math.floor(
-            (difference / 1000) % 60
-          )
-        ),
+        days: Math.max(0, Math.floor(difference / (1000 * 60 * 60 * 24))),
+        hours: Math.max(0, Math.floor((difference / (1000 * 60 * 60)) % 24)),
+        minutes: Math.max(0, Math.floor((difference / (1000 * 60)) % 60)),
+        seconds: Math.max(0, Math.floor((difference / 1000) % 60)),
       });
-
     }, 1000);
-
-
     return () => clearInterval(timer);
-
   }, []);
-
-
 
   const Time = ({ value, label }) => (
     <div className="text-center">
-
-      <motion.p
-        key={value}
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="
-          font-serif
-          text-3xl
-          sm:text-4xl
-          md:text-5xl
-          text-[#5C4740]
-        "
-      >
-        {String(value).padStart(2, "0")}
-      </motion.p>
-
-
-      <p
-        className="
-          mt-2
-          text-[10px]
-          sm:text-xs
-          uppercase
-          tracking-[4px]
-          text-[#9B8176]
-        "
-      >
-        {label}
-      </p>
-
+      <motion.p key={value} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="font-heading text-3xl sm:text-4xl md:text-5xl" style={{ color: 'var(--text-primary)' }}>{String(value).padStart(2, "0")}</motion.p>
+      <p className="mt-2 text-[10px] sm:text-xs uppercase tracking-[4px]" style={{ color: 'var(--accent-pink-2)', opacity: 0.7 }}>{label}</p>
     </div>
   );
 
-
-
   return (
-
-    <section
-      className="
-        relative
-        overflow-hidden
-        py-20
-        px-5
-        bg-gradient-to-b
-        from-[#FFF9F3]
-        via-[#FDF2EA]
-        to-[#FFF8F2]
-      "
-    >
-
-
-      <div
-        className="
-          absolute
-          left-1/2
-          top-1/2
-          -translate-x-1/2
-          -translate-y-1/2
-          h-[350px]
-          w-[350px]
-          rounded-full
-          bg-[#D2A96B]/20
-          blur-[120px]
-        "
-      />
-
-
-      <motion.div
-
-        initial={{
-          opacity:0,
-          y:40
-        }}
-
-        whileInView={{
-          opacity:1,
-          y:0
-        }}
-
-        viewport={{
-          once:true
-        }}
-
-        transition={{
-          duration:1
-        }}
-
-        className="
-          relative
-          mx-auto
-          max-w-4xl
-          rounded-[35px]
-          border
-          border-[#D2A96B]/20
-          bg-white/40
-          backdrop-blur-xl
-          px-6
-          py-12
-          sm:px-12
-        "
-      >
-        <p
-          className="
-            text-center
-            uppercase
-            tracking-[7px]
-            text-xs
-            text-[#9B8176]
-          "
-        >
-          Counting Down To Forever
-        </p>
-
-
-        <h2
-          className="
-            mt-4
-            text-center
-            font-script
-            text-4xl
-            sm:text-5xl
-            text-[#B76E79]
-          "
-        >
-          Our Wedding Day
-        </h2>
-        <div
-          className="
-            mt-6
-            flex
-            justify-center
-            items-center
-            gap-4
-          "
-        >
-
-          <div className="h-px w-16 bg-[#D2A96B]/60"/>
-
-          <p
-            className="
-              text-sm
-              tracking-[5px]
-              text-[#7E6860]
-            "
-          >
-          </p>
-
-
-          <div className="h-px w-16 bg-[#D2A96B]/60"/>
-
+    <section ref={sectionRef} className="relative overflow-hidden py-20 px-5" style={{ backgroundColor: 'var(--bg-deep)' }}>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full blur-[120px]" style={{ backgroundColor: 'var(--accent-pink-2)', opacity: 0.15 }} />
+      <motion.div style={{ scale, opacity, background: `linear-gradient(to bottom, var(--bg-mid) 0%, var(--bg-base) 100%)`, borderRadius: '35px', border: '1px solid var(--border-accent)' }} className="relative mx-auto max-w-4xl backdrop-blur-xl px-6 py-12 sm:px-12">
+        <ScrollRevealText className="text-center"><p className="uppercase tracking-[7px] text-xs" style={{ color: 'var(--accent-pink-2)', opacity: 0.7 }}>Counting Down To Forever</p></ScrollRevealText>
+        <ScrollRevealText className="text-center"><h2 className="mt-4 font-script text-4xl sm:text-5xl" style={{ color: 'var(--text-primary)' }}>Our Wedding Day</h2></ScrollRevealText>
+        <div className="mt-6 flex justify-center items-center gap-4">
+          <div className="h-px w-16" style={{ backgroundColor: 'var(--accent-pink-2)', opacity: 0.4 }} /><Clock size={16} className="" style={{ color: 'var(--accent-pink-2)', opacity: 0.6 }} /><div className="h-px w-16" style={{ backgroundColor: 'var(--accent-pink-2)', opacity: 0.4 }} />
         </div>
-        <div
-          className="
-            mt-10
-            flex
-            justify-center
-            items-center
-            gap-5
-            sm:gap-10
-          "
-        >
-
-          <Time
-            value={timeLeft.days}
-            label="Days"
-          />
-
-
-          <span className="text-[#D2A96B] text-xl">
-            :
-          </span>
-
-
-          <Time
-            value={timeLeft.hours}
-            label="Hours"
-          />
-
-
-          <span className="text-[#D2A96B] text-xl">
-            :
-          </span>
-
-
-          <Time
-            value={timeLeft.minutes}
-            label="Min"
-          />
-
-
-          <span className="text-[#D2A96B] text-xl">
-            :
-          </span>
-
-
-          <Time
-            value={timeLeft.seconds}
-            label="Sec"
-          />
-
+        <div className="mt-10 flex justify-center items-center gap-5 sm:gap-10">
+          <Time value={timeLeft.days} label="Days" /><span className="text-xl" style={{ color: 'var(--accent-pink-2)' }}>:</span>
+          <Time value={timeLeft.hours} label="Hours" /><span className="text-xl" style={{ color: 'var(--accent-pink-2)' }}>:</span>
+          <Time value={timeLeft.minutes} label="Min" /><span className="text-xl" style={{ color: 'var(--accent-pink-2)' }}>:</span>
+          <Time value={timeLeft.seconds} label="Sec" />
         </div>
-        <div
-          className="
-            mt-10
-            flex
-            justify-center
-          "
-        >
-
-          <div
-            className="
-              h-px
-              w-24
-              bg-[#D2A96B]/50
-            "
-          />
-
-        </div>
-
-
+        <GoldDivider className="mt-10" />
       </motion.div>
-
-
     </section>
-
   );
 }

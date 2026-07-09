@@ -4,7 +4,7 @@ import { useMemo } from "react";
 export default function HeroBackground() {
   const sparkles = useMemo(
     () =>
-      Array.from({ length: 20 }, () => ({
+      Array.from({ length: 25 }, () => ({
         left: Math.random() * 100,
         top: Math.random() * 100,
         duration: 4 + Math.random() * 4,
@@ -16,151 +16,75 @@ export default function HeroBackground() {
 
   return (
     <>
-      <div className="absolute inset-0 bg-[#FAF7F2]" />
-      <motion.img
-        src="/images/alisha-anirudh.png"
-        alt="Bride & Groom"
-        className="
-          absolute
-          inset-0
-          h-full
-          w-full
-          object-cover
-          object-center
-          opacity-20
-          select-none
-          pointer-events-none
-        "
-        animate={{
-          scale: [1.08, 1.14, 1.08],
-          y: [0, -15, 0],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-     <div className="absolute inset-0 bg-white/35 backdrop-blur-[1px]" />
-      <motion.div
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.18, 0.3, 0.18],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="
-          absolute
-          left-1/2
-          top-1/2
-          h-[700px]
-          w-[700px]
-          -translate-x-1/2
-          -translate-y-1/2
-          rounded-full
-          bg-gradient-to-r
-          from-[#F8D8DE]
-          via-[#FFF5EF]
-          to-[#F6E5D2]
-          blur-3xl
-        "
-      />
-      <motion.div
-        animate={{
-          x: [-20, 25, -20],
-          y: [-15, 20, -15],
-        }}
-        transition={{
-          duration: 16,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="
-          absolute
-          -left-32
-          top-16
-          h-[420px]
-          w-[420px]
-          rounded-full
-          bg-[#F8D8DE]
-          opacity-30
-          blur-3xl
-        "
-      />
-      <motion.div
-        animate={{
-          x: [20, -25, 20],
-          y: [20, -15, 20],
-        }}
-        transition={{
-          duration: 18,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="
-          absolute
-          -right-32
-          bottom-10
-          h-[420px]
-          w-[420px]
-          rounded-full
-          bg-[#F6E3C8]
-          opacity-30
-          blur-3xl
-        "
-      />
-      {sparkles.map((sparkle, index) => (
+      <div className="absolute inset-0" style={{ backgroundColor: 'var(--bg-deep)' }} />
+
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ backgroundColor: 'var(--bg-deep)' }}>
+        <motion.img
+          src="/images/venue/Alisha-Anirudh.png"
+          alt="Alisha and Anirudh"
+          initial={{ opacity: 0, scale: 1.02, y: 8 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          style={{ filter: 'brightness(1.06) saturate(1.18)' }}
+        />
+
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at 48% 18%, rgba(255,255,255,0.18), transparent 16%), radial-gradient(circle at 45% 32%, rgba(255,236,165,0.18), transparent 28%)' }} />
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, transparent 42%, var(--vignette-color) 100%)' }} />
+
         <motion.div
-          key={index}
-          className="absolute rounded-full bg-[#D2A96B]"
-          style={{
-            width: sparkle.size,
-            height: sparkle.size,
-            left: `${sparkle.left}%`,
-            top: `${sparkle.top}%`,
-          }}
-          animate={{
-            y: [0, -35, 0],
-            opacity: [0, 1, 0],
-            scale: [0.5, 1.5, 0.5],
-          }}
-          transition={{
-            duration: sparkle.duration,
-            repeat: Infinity,
-            delay: sparkle.delay,
-            ease: "easeInOut",
-          }}
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(120deg, transparent 18%, rgba(255,215,115,0.22) 48%, transparent 78%)', mixBlendMode: 'screen', opacity: 0.24 }}
+          animate={{ x: ['-100%', '100%'] }}
+          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
+
+      {/* Central red/gold radial glow */}
+      <motion.div
+        animate={{ scale: [1, 1.06, 1], opacity: [0.12, 0.22, 0.12] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style={{ background: `radial-gradient(circle at center, var(--glow-1), var(--bg-mid))`, opacity: 0.14 }}
+      />
+
+      {/* Floating glow - left vermillion */}
+      <motion.div
+        animate={{ x: [-20, 25, -20], y: [-15, 20, -15] }}
+        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -left-32 top-16 h-[420px] w-[420px] rounded-full blur-3xl"
+        style={{ backgroundColor: 'var(--glow-1)', opacity: 0.15 }}
+      />
+
+      {/* Floating glow - right gold */}
+      <motion.div
+        animate={{ x: [20, -25, 20], y: [20, -15, 20] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -right-32 bottom-10 h-[420px] w-[420px] rounded-full blur-3xl"
+        style={{ backgroundColor: 'var(--glow-2)', opacity: 0.08 }}
+      />
+
+      {/* Gold sparkles */}
+      {sparkles.map((s, i) => (
+        <motion.div
+          key={i}
+          className="absolute rounded-full"
+          style={{ width: s.size, height: s.size, left: `${s.left}%`, top: `${s.top}%` }}
+          animate={{ y: [0, -35, 0], opacity: [0, 0.7, 0], scale: [0.5, 1.5, 0.5] }}
+          transition={{ duration: s.duration, repeat: Infinity, delay: s.delay, ease: "easeInOut" }}
         />
       ))}
+
+      {/* Shimmer sweep */}
       <motion.div
-        className="
-          absolute
-          inset-0
-          opacity-[0.08]
-          bg-gradient-to-r
-          from-transparent
-          via-white
-          to-transparent
-        "
-        animate={{
-          x: ["-120%", "120%"],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        className="absolute inset-0 opacity-[0.04]"
+        style={{ background: 'linear-gradient(90deg, transparent 0%, var(--border-accent) 50%, transparent 100%)' }}
+        animate={{ x: ["-120%", "120%"] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
       />
-      <div
-        className="
-          absolute
-          inset-0
-          bg-[radial-gradient(circle_at_center,transparent_40%,rgba(250,247,242,0.92)_100%)]
-        "
-      />
+
+      {/* Vignette */}
+      <div className="absolute inset-0" style={{ background: 'radial-gradient(circle at center, transparent 40%, var(--vignette-color) 100%)' }} />
     </>
   );
 }
