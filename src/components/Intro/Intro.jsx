@@ -12,24 +12,21 @@ export default function Intro({ onFinish, fadeAtSeconds = 1.0, onRevealStart }) 
   const finishedRef = useRef(false);
   const cleanupTimerRef = useRef(null);
   const timeUpdateHandlerRef = useRef(null);
+  const CURTAIN_FADE_DURATION_MS = 4500;
 
-  // Keep the page locked while intro is visible
   useEffect(() => {
     const prevBody = document.body.style.overflow;
     const prevHtml = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
-    // Ensure overlay fully covers the page on initial paint (no bleeding)
     if (containerRef.current) {
       containerRef.current.classList.remove("intro--fading");
-      containerRef.current.style.backgroundColor = "var(--bg-base)";
       containerRef.current.style.pointerEvents = "auto";
     }
 
     return () => {
       if (cleanupTimerRef.current) window.clearTimeout(cleanupTimerRef.current);
-      // remove any attached handlers
       const vid = videoRef.current;
       if (vid) {
         try {
@@ -46,16 +43,16 @@ export default function Intro({ onFinish, fadeAtSeconds = 1.0, onRevealStart }) 
   function fadeOutAndFinish() {
     if (finishedRef.current) return;
     finishedRef.current = true;
-    // notify parent that reveal is starting so the home can begin fading in
-    try {
-      onRevealStart?.();
-    } catch (e) {}
 
     if (containerRef.current) {
       containerRef.current.classList.add("intro--fading");
     }
-    const FADE_DURATION = 1200;
-    cleanupTimerRef.current = window.setTimeout(() => onFinish?.(), FADE_DURATION);
+
+    try {
+      onRevealStart?.();
+    } catch (e) {}
+
+    cleanupTimerRef.current = window.setTimeout(() => onFinish?.(), CURTAIN_FADE_DURATION_MS);
   }
 
   function startIntro() {
@@ -64,19 +61,16 @@ export default function Intro({ onFinish, fadeAtSeconds = 1.0, onRevealStart }) 
 
     const vid = videoRef.current;
     const btn = buttonRef.current;
-    // hide button immediately on click (CSS transition)
     if (btn) {
       try {
         btn.classList.add("play-hidden");
       } catch (e) {}
     }
     if (!vid) {
-      // fallback
       fadeOutAndFinish();
       return;
     }
 
-    // Ensure video starts from the first frame and plays only after user interaction
     try {
       vid.currentTime = 0;
     } catch (e) {}
@@ -84,17 +78,14 @@ export default function Intro({ onFinish, fadeAtSeconds = 1.0, onRevealStart }) 
     const playPromise = vid.play?.();
     if (playPromise && typeof playPromise.then === "function") {
       playPromise.catch(() => {
-        // ignore play errors (autoplay policies) — still proceed with fade after a short delay
         cleanupTimerRef.current = window.setTimeout(fadeOutAndFinish, 1200);
       });
     }
 
-    // When the video ends, fade the overlay to reveal the page
     vid.onended = () => {
       fadeOutAndFinish();
     };
 
-    // Begin fading a bit earlier while video still plays (configurable via prop)
     const FADE_TRIGGER_SECONDS = Number(fadeAtSeconds) || 1.0;
     function onTimeUpdate() {
       try {
@@ -107,7 +98,6 @@ export default function Intro({ onFinish, fadeAtSeconds = 1.0, onRevealStart }) 
     timeUpdateHandlerRef.current = onTimeUpdate;
     vid.addEventListener("timeupdate", onTimeUpdate);
 
-    // Safety: if video doesn't fire ended, fade after MAX duration
     cleanupTimerRef.current = window.setTimeout(fadeOutAndFinish, 7000);
   }
 
@@ -115,7 +105,7 @@ export default function Intro({ onFinish, fadeAtSeconds = 1.0, onRevealStart }) 
     <div
       ref={containerRef}
       className="intro-overlay fixed inset-0 z-[9999] flex items-center justify-center"
-      style={{ backgroundColor: "var(--bg-base)" }}
+      style={{ background: "rgba(255, 239, 243, 0.55)" }}
     >
       <video
         ref={videoRef}

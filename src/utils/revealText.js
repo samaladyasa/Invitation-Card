@@ -81,7 +81,6 @@ export function initRevealText() {
     });
     mo.observe(document.body, { childList: true, subtree: true });
   } catch (e) {
-    // fail silently
   }
 }
 

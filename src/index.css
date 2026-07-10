@@ -2,23 +2,17 @@
 
 @import "tailwindcss";
 
-/* ── Classic Indian Red & Gold ──
-   Deep dramatic dark + sindoor vermillion + rich jewelry gold
-   Reference uses muted maroon #3E1620 + brownish gold #c9a96e
-   Ours: near-black #0D0A0A + saturated gold #D4A529 + sindoor red #B22234
-   ──────────────────────────────────────────────────────────── */
 :root {
-  /* Global pastel rose-ivory palette */
-  --bg-deep: #FFF6F8; /* baby pink background */
-  --bg-base: #FFEFF3; /* soft baby pink base */
-  --bg-mid: #FFDDE4; /* light blush mid */
-  --bg-card: #FFF8FA; /* card background */
+  --bg-deep: #FFF6F8;
+  --bg-base: #FFEFF3;
+  --bg-mid: #FFDDE4;
+  --bg-card: #FFF8FA;
 
-  --accent-pink: #F3AEB7; /* pastel baby pink accent */
-  --accent-pink-2: #FF7B96; /* stronger pink highlight */
-  --accent-sand: #FFF7F8; /* ivory-sand */
+  --accent-pink: #F3AEB7;
+  --accent-pink-2: #FF7B96;
+  --accent-sand: #FFF7F8;
 
-  --text-primary: #3A2E30; /* readable warm dark */
+  --text-primary: #3A2E30;
   --text-secondary: #F3AEB7;
   --text-muted: #A87F85;
   --border-accent: rgba(243,174,183,0.16);
@@ -100,7 +94,6 @@ p, li, button, label {
   font-family: "Poppins", sans-serif;
 }
 
-/* Mandala background pattern */
 .mandala-bg {
   background-image:
     radial-gradient(circle at 20% 50%, rgba(178, 34, 52, 0.08) 0%, transparent 50%),
@@ -108,7 +101,6 @@ p, li, button, label {
     radial-gradient(circle at 50% 20%, rgba(255, 153, 51, 0.05) 0%, transparent 50%);
 }
 
-/* Paisley accent overlay */
 .paisley-accent::before {
   content: '';
   position: absolute;
@@ -256,14 +248,12 @@ p, li, button, label {
   background: rgba(212, 165, 41, 0.55);
 }
 
-/* Gold border glow effect */
 .gold-border-glow {
   box-shadow:
     0 0 22px rgba(243,174,183,0.12),
     inset 0 0 14px rgba(243,174,183,0.04);
 }
 
-/* Section styling */
 .indian-section {
   position: relative;
   background: var(--bg-base);
@@ -326,7 +316,6 @@ shimmer 2s ease forwards;
     linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
 }
 
-/* Global overrides for hard-coded Tailwind utility colors to align with pastel rose theme */
 .bg-\[\#0D0A0A\] { background-color: var(--bg-deep) !important; }
 .bg-\[\#2A1518\] { background-color: var(--bg-mid) !important; }
 .from-\[\#2A1518\] { background-image: none !important; background-color: var(--bg-mid) !important; }
@@ -338,18 +327,14 @@ shimmer 2s ease forwards;
 .rounded-3xl { background-color: var(--bg-card) !important; }
 .bg-\[\#0D0A0A\]\/70 { background-color: color-mix(in srgb, var(--bg-deep) 70%, transparent) !important; }
 
-/* Make utility text-white readable on light background by using dark text */
 .text-white { color: var(--text-primary) !important; }
 
-/* Ensure heading/gold-like text maps to accent pink for premium look */
 .text-\[\#D4A529\] { color: var(--accent-pink-2) !important; }
 
-/* Catch text utilities that include opacity suffixes, e.g. text-[#D4A529]/70 */
 [class*="text-[#D4A529]"] {
   color: var(--accent-pink-2) !important;
 }
 
-/* More overrides for other dark hex utilities found in the codebase */
 .bg-\[\#1C1012\] { background-color: var(--bg-mid) !important; }
 .bg-\[\#0A0705\] { background-color: var(--bg-deep) !important; }
 .bg-\[\#1C1012\]\/60 { background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important; }
@@ -357,20 +342,17 @@ shimmer 2s ease forwards;
 .border-\[\#D4A529\]\/20 { border-color: color-mix(in srgb, var(--border-accent) 20%, transparent) !important; }
 .hover\:bg-\[\#D4A529\] { background-color: var(--accent-pink) !important; }
 
-/* Scoped preview theme: apply by adding `ref-theme` to a page wrapper */
 .ref-theme {
-  /* Pastel premium — lighter, rich pastel pinks */
-  --ref-bg-deep: #F7EEF1; /* very light blush */
-  --ref-bg-base: #F4DCE0; /* soft rose base */
-  --ref-bg-mid: #EECED1; /* muted pink mid */
-  --ref-card: #F0D7DB; /* card background */
+  --ref-bg-deep: #F7EEF1;
+  --ref-bg-base: #F4DCE0;
+  --ref-bg-mid: #EECED1;
+  --ref-card: #F0D7DB;
 
-  --ref-accent: #E8AEB3; /* pastel steel pink accent */
-  --ref-accent-2: #FF8CA3; /* coral-pink highlight */
-  --ref-sand: #FFF8F9; /* light warm sand */
+  --ref-accent: #E8AEB3;
+  --ref-accent-2: #FF8CA3;
+  --ref-sand: #FFF8F9;
 }
 
-/* Override common hard-coded Tailwind classes inside the scoped theme for preview */
 .ref-theme [class*="bg-[#0D0A0A]"] {
   background-color: var(--ref-bg-deep) !important;
 }
@@ -486,13 +468,12 @@ p, li, button, label {
   animation: invite-float 8s ease-in-out infinite;
 }
 
-/* Intro / curtain overlay performance rules */
 .intro-overlay {
-  will-change: opacity, transform;
-  background-color: #000;
+  will-change: transform, opacity;
+  background-color: rgba(255, 239, 243, 0.55);
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 1400ms cubic-bezier(0.22, 0.12, 0.36, 1), transform 1400ms cubic-bezier(0.22, 0.12, 0.36, 1);
+  transition: opacity 4500ms ease, transform 4500ms cubic-bezier(0.22, 0.12, 0.36, 1);
 }
 .intro-overlay.intro--fading {
   opacity: 0;
@@ -511,6 +492,5 @@ p, li, button, label {
 }
 .play-button.play-hidden {
   opacity: 0;
-  /* Removed scoped preview rules — now using global overrides above */
   pointer-events: none;
 }

@@ -14,7 +14,8 @@ export default function App() {
         className="app-home-wrapper"
         style={{
           opacity: homeFadingIn ? 1 : 0,
-          transition: "opacity 1200ms ease-in-out",
+          transform: homeFadingIn ? "translateY(0)" : "translateY(16px)",
+          transition: "opacity 1400ms ease, transform 1400ms ease",
         }}
       >
         <Home />
