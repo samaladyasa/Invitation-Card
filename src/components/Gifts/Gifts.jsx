@@ -38,10 +38,10 @@ export default function Gifts() {
     };
 
     const g = ctx.createLinearGradient(0, 0, width, height);
-    g.addColorStop(0, "#FFB6C1"); // Light pink
-    g.addColorStop(0.3, "#FF8DA1"); // Slightly deeper rose
-    g.addColorStop(0.65, "#FFB6C1"); // Light pink
-    g.addColorStop(1, "#FFC0CB"); // Soft pink
+    g.addColorStop(0, "#FFB6C1"); 
+    g.addColorStop(0.3, "#FF8DA1"); 
+    g.addColorStop(0.65, "#FFB6C1"); 
+    g.addColorStop(1, "#FFC0CB"); 
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, width, height);
 
@@ -165,7 +165,7 @@ export default function Gifts() {
   return (
     <ScrollReveal>
       <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
-        {/* Custom Background Images */}
+        {}
         <div className="absolute inset-0 pointer-events-none opacity-100">
           <img src={giftsBgMobile} alt="Gifts Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
           <img src={giftsBgDesktop} alt="Gifts Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />

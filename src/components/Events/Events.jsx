@@ -29,7 +29,7 @@ function CurvedConnector({ fromLeft }) {
 export default function Events() {
   return (
     <section id="events" className="relative px-6 py-20 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
-      {/* Custom Background Images */}
+      {}
       <div className="absolute inset-0 pointer-events-none">
         <img src={eventsBgMobile} alt="Events Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
         <img src={eventsBgDesktop} alt="Events Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />

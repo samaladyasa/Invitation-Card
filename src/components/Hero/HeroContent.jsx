@@ -92,7 +92,7 @@ export default function HeroContent({ scratched, onScratched }) {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
-    // Global confetti has been stripped out to ensure it only falls inside the oval.
+    
   }, [scratched]);
 
   return (
@@ -118,7 +118,7 @@ export default function HeroContent({ scratched, onScratched }) {
           </motion.p>
         </div>
 
-        {/* Scratch Oval Component */}
+        {}
         <ScratchPhoto onScratchComplete={onScratched} />
 
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: scratched ? 1 : 0 }} transition={{ delay: scratched ? 3.5 : 0, duration: 1.2 }} className="mx-auto mt-2">

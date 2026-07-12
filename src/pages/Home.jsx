@@ -12,10 +12,10 @@ export default function Home({ scratched, onScratched, envelopeOpened }) {
   return (
     <div className="relative overflow-x-hidden animate-fade-in-slow" style={{ color: 'var(--text-primary)' }}>
       <FallingPetals />
-      {/* Heavy procedural animations removed to fix lagging and respect the new static image backgrounds */}
+      {}
       <Hero scratched={scratched} onScratched={onScratched} envelopeOpened={envelopeOpened} />
 
-      {/* Lower sections reveal slowly after scratch */}
+      {}
       <div style={{
         opacity: scratched ? 1 : 0,
         transform: scratched ? "translateY(0)" : "translateY(20px)",

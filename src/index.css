@@ -10,11 +10,11 @@
 
   --accent-pink: #F3AEB7;
   --accent-pink-2: #D4A529;
-  /* Swapping to gold for some contrast accents */
+  
   --accent-sand: #FFF7F8;
 
   --text-primary: #3d3032;
-  /* Darker taupe/brown for better readability on light peach */
+  
   --text-secondary: #74585B;
   --text-muted: #A87F85;
   --border-accent: rgba(212, 165, 41, 0.3);

@@ -42,7 +42,7 @@ export default function Countdown() {
   return (
     <section id="countdown" ref={sectionRef} className="relative overflow-hidden py-20 px-5" style={{ backgroundColor: 'var(--bg-deep)' }}>
 
-      {/* Custom Background Images */}
+      {}
       <div className="absolute inset-0 pointer-events-none opacity-100">
         <img src={cdBgMobile} alt="Countdown Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
         <img src={cdBgDesktop} alt="Countdown Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />

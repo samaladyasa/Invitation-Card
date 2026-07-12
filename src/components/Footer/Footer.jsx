@@ -24,7 +24,7 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="relative py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
-      {/* Custom Background Images */}
+      {}
       <div className="absolute inset-0 pointer-events-none opacity-100">
         <img src={footerBgMobile} alt="Footer Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
         <img src={footerBgDesktop} alt="Footer Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />

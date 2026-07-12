@@ -19,7 +19,7 @@ export default function Venue() {
 
   return (
     <section ref={ref} id="venue" className="relative py-20 px-5 md:px-8 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
-      {/* Custom Background Images */}
+      {}
       <div className="absolute inset-0 pointer-events-none opacity-100">
         <img src={venueBgMobile} alt="Venue Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
         <img src={venueBgDesktop} alt="Venue Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />

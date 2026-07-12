@@ -44,7 +44,7 @@ function GalleryCard({ image, onSelect, paused }) {
                     </div>
                 </div>
             </div>
-            {/* image-only card: text removed per design request */}
+            {}
         </motion.button>
     );
 }
@@ -57,7 +57,7 @@ export default function Gallery() {
     return (
         <section id="gallery" className="relative px-5 py-20 md:px-8 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
 
-            {/* Custom Background Images */}
+            {}
             <div className="absolute inset-0 pointer-events-none opacity-100">
                 <img src={galleryBgMobile} alt="Gallery Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
                 <img src={galleryBgDesktop} alt="Gallery Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
@@ -69,7 +69,7 @@ export default function Gallery() {
                 <div className="mx-auto mt-4 h-px w-24" style={{ background: 'linear-gradient(to right, transparent, rgba(212,165,41,0.12), transparent)' }} />
             </motion.div>
 
-            {/* Wrapper for scrolling gallery to stay above background */}
+            {}
             <div className="relative z-10">
                 <div className="mx-auto max-w-[1600px] overflow-hidden" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={() => setPaused(true)} onTouchEnd={() => setPaused(false)}>
                     <div className="flex w-fit">
