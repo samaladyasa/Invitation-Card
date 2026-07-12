@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
-import { Clock } from "lucide-react";
-import GoldDivider from "../Dividers/GoldDivider";
+import cdBgDesktop from "../../assets/cdbd.png";
+import cdBgMobile from "../../assets/cdbm.png";
 
 function ScrollRevealText({ children, className = "" }) {
   return (
@@ -40,21 +40,24 @@ export default function Countdown() {
   );
 
   return (
-    <section ref={sectionRef} className="relative overflow-hidden py-20 px-5" style={{ backgroundColor: 'var(--bg-deep)' }}>
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[350px] w-[350px] rounded-full blur-[120px]" style={{ backgroundColor: 'var(--accent-pink-2)', opacity: 0.15 }} />
-      <motion.div style={{ scale, opacity, background: `linear-gradient(to bottom, var(--bg-mid) 0%, var(--bg-base) 100%)`, borderRadius: '35px', border: '1px solid var(--border-accent)' }} className="relative mx-auto max-w-4xl backdrop-blur-xl px-6 py-12 sm:px-12">
+    <section id="countdown" ref={sectionRef} className="relative overflow-hidden py-20 px-5" style={{ backgroundColor: 'var(--bg-deep)' }}>
+
+      {/* Custom Background Images */}
+      <div className="absolute inset-0 pointer-events-none opacity-100">
+        <img src={cdBgMobile} alt="Countdown Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
+        <img src={cdBgDesktop} alt="Countdown Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+      </div>
+
+      <motion.div style={{ scale, opacity, background: 'var(--bg-card)', borderRadius: '35px', border: '1px solid var(--border-accent)' }} className="relative z-10 mx-auto max-w-4xl backdrop-blur-md shadow-2xl px-6 py-12 sm:px-12">
         <ScrollRevealText className="text-center"><p className="uppercase tracking-[7px] text-xs" style={{ color: 'var(--accent-pink-2)', opacity: 0.7 }}>Counting Down To Forever</p></ScrollRevealText>
         <ScrollRevealText className="text-center"><h2 className="mt-4 font-script text-4xl sm:text-5xl" style={{ color: 'var(--text-primary)' }}>Our Wedding Day</h2></ScrollRevealText>
-        <div className="mt-6 flex justify-center items-center gap-4">
-          <div className="h-px w-16" style={{ backgroundColor: 'var(--accent-pink-2)', opacity: 0.4 }} /><Clock size={16} className="" style={{ color: 'var(--accent-pink-2)', opacity: 0.6 }} /><div className="h-px w-16" style={{ backgroundColor: 'var(--accent-pink-2)', opacity: 0.4 }} />
-        </div>
-        <div className="mt-10 flex justify-center items-center gap-5 sm:gap-10">
+        <div className="mx-auto mt-6 h-[1px] w-16" style={{ background: 'linear-gradient(to right, transparent, var(--accent-pink-2), transparent)' }} />
+        <div className="mt-8 flex justify-center items-center gap-5 sm:gap-10">
           <Time value={timeLeft.days} label="Days" /><span className="text-xl" style={{ color: 'var(--accent-pink-2)' }}>:</span>
           <Time value={timeLeft.hours} label="Hours" /><span className="text-xl" style={{ color: 'var(--accent-pink-2)' }}>:</span>
           <Time value={timeLeft.minutes} label="Min" /><span className="text-xl" style={{ color: 'var(--accent-pink-2)' }}>:</span>
           <Time value={timeLeft.seconds} label="Sec" />
         </div>
-        <GoldDivider className="mt-10" />
       </motion.div>
     </section>
   );

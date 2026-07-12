@@ -2,8 +2,9 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
 import confetti from "canvas-confetti";
 import weddingData from "../../data/weddingData";
+import ScratchPhoto from "./ScratchPhoto";
 
-function RevealText({ text, className = "", delay = 0 }) {
+function RevealText({ text, className = "", delay = 0, start = false }) {
   const words = text.split(" ");
   return (
     <motion.span className={className}>
@@ -11,8 +12,8 @@ function RevealText({ text, className = "", delay = 0 }) {
         <motion.span
           key={i}
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: delay + i * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          animate={{ opacity: start ? 1 : 0, y: start ? 0 : 20 }}
+          transition={{ delay: start ? delay + i * 0.15 : 0, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="inline-block mr-[0.3em]"
         >
           {word}
@@ -22,7 +23,7 @@ function RevealText({ text, className = "", delay = 0 }) {
   );
 }
 
-function RevealName({ text, className = "", delay = 0 }) {
+function RevealName({ text, className = "", delay = 0, start = false }) {
   const letters = text.split("");
   return (
     <motion.span className={className}>
@@ -30,8 +31,8 @@ function RevealName({ text, className = "", delay = 0 }) {
         <motion.span
           key={i}
           initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: delay + i * 0.03, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          animate={{ opacity: start ? 1 : 0, x: start ? 0 : -24 }}
+          transition={{ delay: start ? delay + i * 0.06 : 0, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
           className="inline-block"
         >
           {letter}
@@ -51,7 +52,39 @@ function OrnamentalLine() {
   );
 }
 
-export default function HeroContent() {
+function CircularDate({ dateStr, delay, start }) {
+  const clean = String(dateStr || "").replace(/[{}]/g, "").trim();
+  const cleanUpper = clean.toUpperCase();
+  const pathIdRef = useRef(`dateCurve-${Math.random().toString(36).slice(2, 9)}`);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: start ? 1 : 0, scale: start ? 1 : 0.5 }}
+      transition={{ delay: start ? delay : 0, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+      className="mx-auto mt-4 w-[150px] h-[150px] sm:w-[170px] sm:h-[170px] relative flex items-center justify-center p-2 rounded-full border border-[rgba(0,0,0,0.06)]"
+      style={{ backgroundColor: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(4px)', boxShadow: '0 8px 32px rgba(0,0,0,0.04)' }}
+    >
+      <div className="absolute w-[80%] h-[80%] rounded-full border border-[#d4a529] opacity-30" />
+      <motion.svg
+        animate={{ rotate: 360 }}
+        transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+        viewBox="0 0 100 100"
+        className="absolute inset-0 w-full h-full"
+      >
+        <path id={pathIdRef.current} d="M 50, 50 m -33, 0 a 33,33 0 1,1 66,0 a 33,33 0 1,1 -66,0" fill="transparent" />
+        <text className="font-bold tracking-widest" textAnchor="middle" style={{ fontSize: '13px', fontFamily: '"Cormorant Garamond", serif', fill: '#000' }}>
+          <textPath href={`#${pathIdRef.current}`} startOffset="50%">
+            {cleanUpper}
+          </textPath>
+        </text>
+      </motion.svg>
+      <div className="absolute w-2 h-2 rounded-full bg-[#d4a529] opacity-80" />
+    </motion.div>
+  );
+}
+
+export default function HeroContent({ scratched, onScratched }) {
   const { hero, invitation } = weddingData;
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -59,102 +92,67 @@ export default function HeroContent() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
-    const duration = 5000;
-    const animationEnd = Date.now() + duration;
-
-    const root = getComputedStyle(document.documentElement);
-    const confC1 = root.getPropertyValue('--accent-pink') || '#B22234';
-    const confC2 = root.getPropertyValue('--bg-mid') || '#8B1A2B';
-    const confC3 = root.getPropertyValue('--accent-pink-2') || '#D4A529';
-    const confC4 = root.getPropertyValue('--accent-pink') || '#FFD700';
-
-    const interval = setInterval(() => {
-      const timeLeft = animationEnd - Date.now();
-      if (timeLeft <= 0) {
-        return clearInterval(interval);
-      }
-
-      confetti({
-        particleCount: 1,
-        angle: 45 + Math.random() * 90,
-        spread: 60,
-        origin: { x: Math.random(), y: -0.1 },
-        colors: [confC1.trim(), confC2.trim(), confC3.trim(), confC4.trim()],
-        scalar: 0.8 + Math.random() * 0.4,
-        ticks: 500,
-        gravity: 0.2 + Math.random() * 0.1,
-        drift: -0.3 + Math.random(),
-        disableForReducedMotion: true,
-      });
-    }, 400);
-
-    return () => clearInterval(interval);
-  }, []);
+    // Global confetti has been stripped out to ensure it only falls inside the oval.
+  }, [scratched]);
 
   return (
-    <div ref={ref} className="relative z-20 flex min-h-screen items-start justify-center px-5 pt-36 sm:pt-40 md:pt-48 lg:pt-56 lg:px-8">
-      <motion.div style={{ y, opacity }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="relative z-20 w-full max-w-4xl text-center">
-          <div className="mx-auto max-w-4xl text-center mt-[60px] sm:mt-8">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-2 font-heading text-sm uppercase tracking-[0.08em] font-black sm:text-base lg:text-lg"
-              style={{ color: '#000', lineHeight: 1.3, textShadow: '0 1px 0 #fff, 0 2px 0 #fff, 0 3px 0 #fff, 0 4px 0 #fff' }}
-            >
-              <RevealText text={invitation.mantra} delay={0.26} />
-            </motion.p>
+    <div ref={ref} className="relative z-20 flex min-h-screen items-start justify-center px-4 pt-[20vh] sm:pt-[22vh] pb-[10vh] overflow-hidden lg:px-8">
+      <motion.div style={{ y, opacity }} initial={{ opacity: 1 }} className="relative z-20 w-full max-w-4xl text-center flex flex-col items-center">
+        <div className="mx-auto max-w-4xl text-center mt-4">
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: scratched ? 1 : 0, y: scratched ? 0 : 15 }}
+            transition={{ delay: scratched ? 1.5 : 0, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            className="font-heading text-xs uppercase tracking-[0.1em] font-bold sm:text-sm lg:text-base text-[#2b1f20]"
+          >
+            <RevealText text={invitation.mantra} delay={1.6} start={scratched} />
+          </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-4 sm:mt-6 font-heading text-sm uppercase tracking-[0.12em] sm:text-base lg:text-lg"
-              style={{ color: '#000', lineHeight: 1.45 }}
-            >
-              <RevealText text={invitation.message} delay={0.44} />
-            </motion.p>
-          </div>
-
-        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.8, duration: 0.8 }} className="mx-auto mt-6">
-          <OrnamentalLine />
-        </motion.div>
-
-        <h1 className="mt-6 font-script text-[clamp(3rem,12vw,8rem)] leading-none font-normal" style={{ color: '#000', fontWeight: 300, textShadow: '0 2px 8px rgba(0, 0, 0, 0.04)', letterSpacing: '-0.03em' }}>
-          <RevealName text={hero.bride} delay={0.9} />
-        </h1>
-
-        <p className="mt-4 text-sm uppercase tracking-[0.14em] sm:text-base" style={{ color: '#000', lineHeight: 1.4 }}>{/* subtle label */}
-          <RevealText text={invitation.brideRole} delay={1.05} />
-        </p>
-        <p className="mt-2 font-heading text-lg sm:text-2xl lg:text-3xl" style={{ color: '#000', letterSpacing: '0.01em', lineHeight: 1.35 }}>{/* parents */}
-          <RevealText text={invitation.brideParents} delay={1.12} />
-        </p>
-
-
-        <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 1.45, duration: 0.6 }} className="my-4 text-4xl sm:text-5xl lg:text-6xl font-script font-bold" style={{ color: '#000', textShadow: '0 3px 12px rgba(0, 0, 0, 0.06)' }}>&</motion.div>
-
-        <h1 className="font-script text-[clamp(3rem,12vw,8rem)] leading-none font-normal" style={{ color: '#000', fontWeight: 300, textShadow: '0 2px 8px rgba(0, 0, 0, 0.04)', letterSpacing: '-0.03em' }}>
-          <RevealName text={hero.groom} delay={1.6} />
-        </h1>
-        <p className="mt-4 text-sm uppercase tracking-[0.14em] sm:text-base" style={{ color: '#000', lineHeight: 1.4 }}>{/* subtle label */}
-          <RevealText text={invitation.groomRole} delay={1.75} />
-        </p>
-        <p className="mt-2 font-heading text-lg sm:text-2xl lg:text-3xl" style={{ color: '#000', letterSpacing: '0.01em', lineHeight: 1.35 }}>{/* parents */}
-          <RevealText text={invitation.groomParents} delay={1.82} />
-        </p>
-
-        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 2.3, duration: 0.8 }} className="mx-auto mt-10">
-          <OrnamentalLine />
-        </motion.div>
-
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.8 }} className="mt-8 text-lg font-heading sm:text-xl lg:text-2xl" style={{ color: '#000', marginTop: '-30px' }}>
-          <RevealText text={invitation.date} delay={2.95} />
-        </motion.p>
-
-        <div className="mt-8">
-          <p className="lowercase tracking-[0.45em] text-[10px] sm:text-xs" style={{ color: '#000' }}><RevealText text={'scroll to explore'} delay={3.2} /></p>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: scratched ? 1 : 0, y: scratched ? 0 : 15 }}
+            transition={{ delay: scratched ? 2.5 : 0, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-2 font-heading text-[10px] uppercase tracking-[0.15em] sm:text-xs text-[#2b1f20]"
+          >
+            <RevealText text={invitation.message} delay={2.6} start={scratched} />
+          </motion.p>
         </div>
+
+        {/* Scratch Oval Component */}
+        <ScratchPhoto onScratchComplete={onScratched} />
+
+        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: scratched ? 1 : 0 }} transition={{ delay: scratched ? 3.5 : 0, duration: 1.2 }} className="mx-auto mt-2">
+          <OrnamentalLine />
+        </motion.div>
+
+        <h1 className="mt-2 font-script text-[clamp(2.5rem,10vw,6rem)] leading-none text-[#1a1415]">
+          <RevealName text={hero.bride} delay={3.8} start={scratched} />
+        </h1>
+
+        <p className="mt-1 text-[10px] uppercase tracking-[0.2em] font-medium text-[#2b1f20]">
+          <RevealText text={invitation.brideRole} delay={4.2} start={scratched} />
+        </p>
+        <p className="mt-0.5 text-sm sm:text-lg font-bold tracking-wide text-black" style={{ fontFamily: '"Playfair Display", serif' }}>
+          <RevealText text={invitation.brideParents} delay={4.5} start={scratched} />
+        </p>
+
+        <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: scratched ? 1 : 0, opacity: scratched ? 1 : 0 }} transition={{ delay: scratched ? 5.0 : 0, duration: 1.2 }} className="my-1.5 text-2xl sm:text-4xl font-script font-bold text-[#1a1415]">&</motion.div>
+
+        <h1 className="font-script text-[clamp(2.5rem,10vw,6rem)] leading-none text-[#1a1415]">
+          <RevealName text={hero.groom} delay={5.5} start={scratched} />
+        </h1>
+
+        <p className="mt-1 text-[10px] uppercase tracking-[0.2em] font-medium text-[#2b1f20]">
+          <RevealText text={invitation.groomRole} delay={6.0} start={scratched} />
+        </p>
+        <p className="mt-0.5 text-sm sm:text-lg font-bold tracking-wide text-black" style={{ fontFamily: '"Playfair Display", serif' }}>
+          <RevealText text={invitation.groomParents} delay={6.3} start={scratched} />
+        </p>
+
+        <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: scratched ? 1 : 0 }} transition={{ delay: scratched ? 7.0 : 0, duration: 1.2 }} className="mx-auto mt-1 mb-2 border-t border-[#d4a529] w-12 opacity-60"></motion.div>
+
+        <CircularDate dateStr={invitation.date} delay={7.5} start={scratched} />
+
       </motion.div>
     </div>
   );

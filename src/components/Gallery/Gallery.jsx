@@ -2,6 +2,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Image } from "lucide-react";
 
+import galleryBgDesktop from "../../assets/gallerybd.png";
+import galleryBgMobile from "../../assets/gallerybm.png";
+
 const galleryImages = [
     { id: 1, src: 'https://plus.unsplash.com/premium_photo-1682092632793-c7d75b23718e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwd2VkZGluZyUyMHBob3RvZ3JhcGh5fGVufDB8fDB8fHww', alt: "Wedding moment 1" },
     { id: 2, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMbguuZ-GdzVb0PKQlU4hf_zSZFG0Vs7cT33eW-953Cg&s=10', alt: "Wedding moment 2" },
@@ -28,7 +31,7 @@ function GalleryCard({ image, onSelect, paused }) {
         >
             <div className="relative h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-[1.25rem] border" style={{ borderColor: 'rgba(255,255,255,0.06)', backgroundColor: 'var(--bg-base)' }}>
                 {image.src ? (
-                    <img src={image.src} alt={image.alt} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={image.src} alt={image.alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center" style={{ background: 'radial-gradient(circle at top, rgba(212,165,41,0.12), transparent 60%)' }}>
                         <Image size={34} className="" style={{ color: 'var(--accent-pink-2)', opacity: 0.3 }} />
@@ -52,26 +55,31 @@ export default function Gallery() {
     const trackImages = [...galleryImages, ...galleryImages];
 
     return (
-        <section id="gallery" className="px-5 py-20 md:px-8" style={{ backgroundColor: 'var(--bg-deep)' }}>
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-12 text-center">
-                    <p className="text-xs uppercase tracking-[8px]" style={{ color: 'var(--accent-pink-2)', opacity: 0.7 }}>Captured Moments</p>
-                    <h2 className="mt-4 font-script text-5xl" style={{ color: 'var(--text-primary)' }}>Our Gallery</h2>
-                    <div className="mx-auto mt-4 h-px w-24" style={{ background: 'linear-gradient(to right, transparent, rgba(212,165,41,0.12), transparent)' }} />
+        <section id="gallery" className="relative px-5 py-20 md:px-8 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
+
+            {/* Custom Background Images */}
+            <div className="absolute inset-0 pointer-events-none opacity-100">
+                <img src={galleryBgMobile} alt="Gallery Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
+                <img src={galleryBgDesktop} alt="Gallery Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+            </div>
+
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative z-10 mb-12 text-center">
+                <p className="text-xs uppercase tracking-[8px] font-bold text-black opacity-80">Captured Moments</p>
+                <h2 className="mt-4 font-script text-5xl" style={{ color: 'var(--text-primary)' }}>Our Gallery</h2>
+                <div className="mx-auto mt-4 h-px w-24" style={{ background: 'linear-gradient(to right, transparent, rgba(212,165,41,0.12), transparent)' }} />
             </motion.div>
 
-                <div className="mx-auto w-full max-w-[1400px] px-4 md:px-8 lg:px-12 overflow-hidden rounded-[2rem] py-6" style={{ border: '1px solid rgba(212,165,41,0.06)', background: 'radial-gradient(circle at top, rgba(212,165,41,0.08), transparent 60%)', boxShadow: '0 20px 80px rgba(0,0,0,0.18)' }}>
-                <motion.div
-                    className="film-roll-track flex w-max gap-4 sm:gap-6 md:gap-8 lg:gap-10 px-4 sm:px-6 md:px-8 lg:px-12"
-                    animate={paused ? { x: 0 } : { x: ["0%", "-50%"] }}
-                    transition={{ duration: 24, ease: "linear", repeat: Infinity, repeatType: "loop" }}
-                    onMouseEnter={() => setPaused(true)}
-                    onMouseLeave={() => setPaused(false)}
-                    onClick={() => setPaused((value) => !value)}
-                >
-                    {trackImages.map((image, index) => (
-                        <GalleryCard key={`${image.id}-${index}`} image={image} onSelect={setSelected} paused={paused} />
-                    ))}
-                </motion.div>
+            {/* Wrapper for scrolling gallery to stay above background */}
+            <div className="relative z-10">
+                <div className="mx-auto max-w-[1600px] overflow-hidden" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onTouchStart={() => setPaused(true)} onTouchEnd={() => setPaused(false)}>
+                    <div className="flex w-fit">
+                        <motion.div className="flex gap-4 md:gap-8 px-2 md:px-4" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 35, ease: "linear", repeat: Infinity, repeatType: "loop" }} style={{ animationPlayState: paused ? 'paused' : 'running' }}>
+                            {trackImages.map((img, i) => (
+                                <GalleryCard key={`${img.id}-${i}`} image={img} onSelect={setSelected} paused={paused} />
+                            ))}
+                        </motion.div>
+                    </div>
+                </div>
             </div>
 
             <AnimatePresence>

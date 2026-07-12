@@ -1,18 +1,18 @@
 import HeroBackground from "../Background/HeroBackground";
-import HeroParticles from "./HeroParticles";
-import HeroDecorations from "./HeroDecorations";
 import HeroContent from "./HeroContent";
 
-export default function Hero() {
+export default function Hero({ scratched, onScratched, envelopeOpened }) {
   return (
     <section
       id="hero"
       className="relative min-h-screen overflow-hidden"
     >
-      <HeroBackground />
-      <HeroParticles />
-      <HeroDecorations />
-      <HeroContent />
+      {envelopeOpened && (
+        <>
+          <HeroBackground />
+        </>
+      )}
+      <HeroContent scratched={scratched} onScratched={onScratched} />
     </section>
   );
 }

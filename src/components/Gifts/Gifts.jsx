@@ -3,6 +3,9 @@ import confetti from "canvas-confetti";
 import ScrollReveal from "../ScrollReveal";
 import { Gift } from "lucide-react";
 
+import giftsBgDesktop from "../../assets/giftsbd.png";
+import giftsBgMobile from "../../assets/giftsbm.png";
+
 export default function Gifts() {
   const canvasRef = useRef(null);
   const cardRef = useRef(null);
@@ -15,7 +18,7 @@ export default function Gifts() {
   useEffect(() => {
     const c = canvasRef.current;
     const card = cardRef.current;
-    const ctx = c.getContext("2d");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
     const { width, height } = card.getBoundingClientRect();
     c.width = width;
     c.height = height;
@@ -35,10 +38,10 @@ export default function Gifts() {
     };
 
     const g = ctx.createLinearGradient(0, 0, width, height);
-    g.addColorStop(0, c1.trim());
-    g.addColorStop(0.3, c2.trim());
-    g.addColorStop(0.65, c3.trim());
-    g.addColorStop(1, c4.trim());
+    g.addColorStop(0, "#FFB6C1"); // Light pink
+    g.addColorStop(0.3, "#FF8DA1"); // Slightly deeper rose
+    g.addColorStop(0.65, "#FFB6C1"); // Light pink
+    g.addColorStop(1, "#FFC0CB"); // Soft pink
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, width, height);
 
@@ -47,11 +50,48 @@ export default function Gifts() {
       ctx.fillRect(Math.random() * width, Math.random() * height, Math.random() * 60 + 20, 1);
     }
 
-    ctx.fillStyle = "rgba(212,165,41,0.4)";
-    ctx.font = "12px Poppins, sans-serif";
+    ctx.fillStyle = "rgba(255,255,255,0.6)";
+    ctx.font = "14px Poppins, sans-serif";
     ctx.textAlign = "center";
     ctx.fillText("Scratch here", width / 2, height / 2);
   }, []);
+
+  useEffect(() => {
+    const c = canvasRef.current;
+    if (!c) return;
+
+    const handleTouchStart = (e) => {
+      drawing.current = true;
+      lastPoint.current = null;
+      scratch(e);
+    };
+
+    const handleTouchMove = (e) => {
+      scratch(e);
+    };
+
+    const handleTouchEnd = () => {
+      drawing.current = false;
+      lastPoint.current = null;
+    };
+
+    const handleTouchCancel = () => {
+      drawing.current = false;
+      lastPoint.current = null;
+    };
+
+    c.addEventListener('touchstart', handleTouchStart, { passive: false });
+    c.addEventListener('touchmove', handleTouchMove, { passive: false });
+    c.addEventListener('touchend', handleTouchEnd, { passive: false });
+    c.addEventListener('touchcancel', handleTouchCancel, { passive: false });
+
+    return () => {
+      c.removeEventListener('touchstart', handleTouchStart);
+      c.removeEventListener('touchmove', handleTouchMove);
+      c.removeEventListener('touchend', handleTouchEnd);
+      c.removeEventListener('touchcancel', handleTouchCancel);
+    };
+  }, [canvasRef.current]);
 
   const point = (e) => {
     const r = canvasRef.current.getBoundingClientRect();
@@ -61,10 +101,10 @@ export default function Gifts() {
 
   const scratch = (e) => {
     if (!drawing.current || revealed.current) return;
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
 
     const c = canvasRef.current;
-    const ctx = c.getContext("2d");
+    const ctx = c.getContext("2d", { willReadFrequently: true });
     const { x, y } = point(e);
 
     ctx.globalCompositeOperation = "destination-out";
@@ -124,21 +164,26 @@ export default function Gifts() {
 
   return (
     <ScrollReveal>
-      <section className="py-20 px-5" style={{ backgroundColor: "var(--bg-deep)" }}>
-        <div className="max-w-md mx-auto text-center">
+      <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
+        {/* Custom Background Images */}
+        <div className="absolute inset-0 pointer-events-none opacity-100">
+          <img src={giftsBgMobile} alt="Gifts Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
+          <img src={giftsBgDesktop} alt="Gifts Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+        </div>
+
+        <div className="relative z-10 max-w-md mx-auto text-center">
           <span
-            className="inline-flex items-center gap-2 rounded-full px-7 py-2 text-xs uppercase tracking-[4px] shadow"
+            className="inline-flex items-center gap-2 rounded-full px-7 py-2 text-xs uppercase tracking-[4px] shadow font-bold text-black"
             style={{
-              border: "1px solid rgba(0,0,0,0.06)",
-              background: "linear-gradient(90deg, rgba(255,192,203,0.04), rgba(255,255,255,0))",
-              color: "var(--accent-pink)",
+              border: "1px solid rgba(0,0,0,0.1)",
+              background: "rgba(255,255,255,0.5)",
               boxShadow: "0 6px 14px rgba(0,0,0,0.12)",
               backdropFilter: "blur(2px)",
             }}
           >
             <Gift size={14} /> Gifts
           </span>
-          <h2 className="mt-5 font-heading text-3xl" style={{ color: "var(--text-primary)" }}>
+          <h2 className="mt-5 font-script text-4xl sm:text-5xl" style={{ color: "var(--text-primary)" }}>
             A Little Surprise
           </h2>
           <p className="mt-3" style={{ color: "var(--text-secondary)" }}>
@@ -147,10 +192,10 @@ export default function Gifts() {
 
           <div
             ref={cardRef}
-            className="relative mt-8 h-56 rounded-3xl shadow-xl overflow-hidden"
+            className="relative mt-8 h-56 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-md"
             style={{
-              border: "1px solid rgba(212,165,41,0.12)",
-              background: "linear-gradient(to bottom, var(--bg-mid), var(--bg-deep))",
+              border: "1px solid var(--border-accent)",
+              background: "var(--bg-card)",
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center px-8 text-center">
@@ -185,20 +230,7 @@ export default function Gifts() {
                 drawing.current = false;
                 lastPoint.current = null;
               }}
-              onTouchStart={(e) => {
-                drawing.current = true;
-                lastPoint.current = null;
-                scratch(e);
-              }}
-              onTouchMove={scratch}
-              onTouchEnd={() => {
-                drawing.current = false;
-                lastPoint.current = null;
-              }}
-              onTouchCancel={() => {
-                drawing.current = false;
-                lastPoint.current = null;
-              }}
+              // Touch events are attached with non-passive listeners in useEffect
             />
           </div>
         </div>

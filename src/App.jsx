@@ -1,31 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Intro from "./components/Intro/Intro";
 import Home from "./pages/Home";
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [fadeAtSeconds] = useState(1.0);
-  const [homeFadingIn, setHomeFadingIn] = useState(false);
+  const [envelopeOpened, setEnvelopeOpened] = useState(false);
+  const [introUnmounted, setIntroUnmounted] = useState(false);
+  const [scratched, setScratched] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = scratched ? "auto" : "hidden";
+    document.documentElement.style.overflow = scratched ? "auto" : "hidden";
+  }, [scratched]);
 
   return (
     <>
       <div
         className="app-home-wrapper"
         style={{
-          opacity: homeFadingIn ? 1 : 0,
-          transform: homeFadingIn ? "translateY(0)" : "translateY(16px)",
-          transition: "opacity 1400ms ease, transform 1400ms ease",
+          height: scratched ? "auto" : "100vh",
+          overflow: scratched ? "visible" : "hidden",
         }}
       >
-        <Home />
+        <Home scratched={scratched} onScratched={() => setScratched(true)} envelopeOpened={envelopeOpened} />
       </div>
 
-      {showIntro && (
+      {!introUnmounted && (
         <Intro
-          fadeAtSeconds={fadeAtSeconds}
-          onRevealStart={() => setHomeFadingIn(true)}
-          onFinish={() => setShowIntro(false)}
+          envelopeOpened={envelopeOpened}
+          onEnvelopeOpened={() => {
+            setEnvelopeOpened(true);
+            setTimeout(() => setIntroUnmounted(true), 1000);
+          }}
         />
       )}
     </>

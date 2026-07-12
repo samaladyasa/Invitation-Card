@@ -6,19 +6,18 @@
   --bg-deep: #FFF6F8;
   --bg-base: #FFEFF3;
   --bg-mid: #FFDDE4;
-  --bg-card: #FFF8FA;
+  --bg-card: rgba(255, 255, 255, 0.75);
 
   --accent-pink: #F3AEB7;
-  --accent-pink-2: #FF7B96;
+  --accent-pink-2: #D4A529;
+  /* Swapping to gold for some contrast accents */
   --accent-sand: #FFF7F8;
 
-  --text-primary: #3A2E30;
-  --text-secondary: #F3AEB7;
+  --text-primary: #3d3032;
+  /* Darker taupe/brown for better readability on light peach */
+  --text-secondary: #74585B;
   --text-muted: #A87F85;
-  --border-accent: rgba(243,174,183,0.16);
-  --glow-1: var(--accent-pink-2);
-  --glow-2: var(--accent-pink);
-  --vignette-color: rgba(200,160,163,0.9);
+  --border-accent: rgba(212, 165, 41, 0.3);
 }
 
 html {
@@ -73,14 +72,25 @@ body {
   letter-spacing: 0.02em;
 }
 
-.no-reveal { opacity: 1 !important; transform: none !important; }
+.no-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   letter-spacing: 0.01em;
   word-spacing: 0.1em;
 }
 
-p, li, button, label {
+p,
+li,
+button,
+label {
   letter-spacing: 0.0025em;
   word-spacing: 0.07em;
   line-height: 1.55;
@@ -146,6 +156,7 @@ p, li, button, label {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -155,6 +166,7 @@ p, li, button, label {
   0% {
     background-position: -1000px 0;
   }
+
   100% {
     background-position: 1000px 0;
   }
@@ -214,11 +226,11 @@ p, li, button, label {
 
 .gold-shimmer {
   background: linear-gradient(90deg,
-      rgba(255,123,150,0.95) 0%,
+      rgba(255, 123, 150, 0.95) 0%,
       var(--accent-pink-2) 25%,
       var(--accent-pink) 50%,
       var(--accent-pink-2) 75%,
-      rgba(255,123,150,0.95) 100%);
+      rgba(255, 123, 150, 0.95) 100%);
   background-size: 200% auto;
   animation: shimmer 3s linear infinite;
   -webkit-background-clip: text;
@@ -250,8 +262,8 @@ p, li, button, label {
 
 .gold-border-glow {
   box-shadow:
-    0 0 22px rgba(243,174,183,0.12),
-    inset 0 0 14px rgba(243,174,183,0.04);
+    0 0 22px rgba(243, 174, 183, 0.12),
+    inset 0 0 14px rgba(243, 174, 183, 0.04);
 }
 
 .indian-section {
@@ -267,27 +279,40 @@ p, li, button, label {
 
 @keyframes shimmer {
 
-0%{
-transform:translateX(-120%);
-}
+  0% {
+    transform: translateX(-120%);
+  }
 
-100%{
-transform:translateX(120%);
-}
-
-}
-
-
-.animate-shimmer{
-
-animation:
-shimmer 2s ease forwards;
+  100% {
+    transform: translateX(120%);
+  }
 
 }
-@keyframes fade-in-slow { 0% { opacity: 0; } 100% { opacity: 1; } }
-.animate-fade-in-slow { animation: fade-in-slow 1.5s ease-in-out forwards; }
+
+
+.animate-shimmer {
+
+  animation:
+    shimmer 2s ease forwards;
+
+}
+
+@keyframes fade-in-slow {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-slow {
+  animation: fade-in-slow 1.5s ease-in-out forwards;
+}
 
 @keyframes invite-float {
+
   0%,
   100% {
     transform: translateY(0px);
@@ -299,6 +324,7 @@ shimmer 2s ease forwards;
 }
 
 @keyframes invite-glow {
+
   0%,
   100% {
     opacity: 0.25;
@@ -311,36 +337,90 @@ shimmer 2s ease forwards;
 
 .invite-page {
   background:
-    radial-gradient(circle at top, rgba(102,224,214,0.10), transparent 38%),
-    radial-gradient(circle at bottom, rgba(255,94,87,0.06), transparent 42%),
+    radial-gradient(circle at top, rgba(102, 224, 214, 0.10), transparent 38%),
+    radial-gradient(circle at bottom, rgba(255, 94, 87, 0.06), transparent 42%),
     linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-base) 100%);
 }
 
-.bg-\[\#0D0A0A\] { background-color: var(--bg-deep) !important; }
-.bg-\[\#2A1518\] { background-color: var(--bg-mid) !important; }
-.from-\[\#2A1518\] { background-image: none !important; background-color: var(--bg-mid) !important; }
-.to-\[\#0D0A0A\] { background-image: none !important; background-color: var(--bg-base) !important; }
-.bg-\[\#0A0705\] { background-color: var(--bg-deep) !important; }
-.border-\[\#D4A529\] { border-color: var(--border-accent) !important; }
-.text-\[\#D4A529\] { color: var(--accent-pink) !important; }
-.bg-gradient-to-b.from-\[\#2A1518\] { background-image: none !important; background-color: var(--bg-mid) !important; }
-.rounded-3xl { background-color: var(--bg-card) !important; }
-.bg-\[\#0D0A0A\]\/70 { background-color: color-mix(in srgb, var(--bg-deep) 70%, transparent) !important; }
+.bg-\[\#0D0A0A\] {
+  background-color: var(--bg-deep) !important;
+}
 
-.text-white { color: var(--text-primary) !important; }
+.bg-\[\#2A1518\] {
+  background-color: var(--bg-mid) !important;
+}
 
-.text-\[\#D4A529\] { color: var(--accent-pink-2) !important; }
+.from-\[\#2A1518\] {
+  background-image: none !important;
+  background-color: var(--bg-mid) !important;
+}
+
+.to-\[\#0D0A0A\] {
+  background-image: none !important;
+  background-color: var(--bg-base) !important;
+}
+
+.bg-\[\#0A0705\] {
+  background-color: var(--bg-deep) !important;
+}
+
+.border-\[\#D4A529\] {
+  border-color: var(--border-accent) !important;
+}
+
+.text-\[\#D4A529\] {
+  color: var(--accent-pink) !important;
+}
+
+.bg-gradient-to-b.from-\[\#2A1518\] {
+  background-image: none !important;
+  background-color: var(--bg-mid) !important;
+}
+
+.rounded-3xl {
+  background-color: var(--bg-card) !important;
+}
+
+.bg-\[\#0D0A0A\]\/70 {
+  background-color: color-mix(in srgb, var(--bg-deep) 70%, transparent) !important;
+}
+
+.text-white {
+  color: var(--text-primary) !important;
+}
+
+.text-\[\#D4A529\] {
+  color: var(--accent-pink-2) !important;
+}
 
 [class*="text-[#D4A529]"] {
   color: var(--accent-pink-2) !important;
 }
 
-.bg-\[\#1C1012\] { background-color: var(--bg-mid) !important; }
-.bg-\[\#0A0705\] { background-color: var(--bg-deep) !important; }
-.bg-\[\#1C1012\]\/60 { background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important; }
-.from-\[\#2A1518\]\/60 { background-image: none !important; background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important; }
-.border-\[\#D4A529\]\/20 { border-color: color-mix(in srgb, var(--border-accent) 20%, transparent) !important; }
-.hover\:bg-\[\#D4A529\] { background-color: var(--accent-pink) !important; }
+.bg-\[\#1C1012\] {
+  background-color: var(--bg-mid) !important;
+}
+
+.bg-\[\#0A0705\] {
+  background-color: var(--bg-deep) !important;
+}
+
+.bg-\[\#1C1012\]\/60 {
+  background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important;
+}
+
+.from-\[\#2A1518\]\/60 {
+  background-image: none !important;
+  background-color: color-mix(in srgb, var(--bg-mid) 60%, transparent) !important;
+}
+
+.border-\[\#D4A529\]\/20 {
+  border-color: color-mix(in srgb, var(--border-accent) 20%, transparent) !important;
+}
+
+.hover\:bg-\[\#D4A529\] {
+  background-color: var(--accent-pink) !important;
+}
 
 .ref-theme {
   --ref-bg-deep: #F7EEF1;
@@ -356,23 +436,29 @@ shimmer 2s ease forwards;
 .ref-theme [class*="bg-[#0D0A0A]"] {
   background-color: var(--ref-bg-deep) !important;
 }
+
 .ref-theme [class*="bg-[#2A1518]"] {
   background-color: var(--ref-bg-mid) !important;
 }
+
 .ref-theme [class*="from-[#2A1518]"] {
   background-image: none !important;
   background-color: var(--ref-bg-mid) !important;
 }
+
 .ref-theme [class*="to-[#0D0A0A]"] {
   background-image: none !important;
   background-color: var(--ref-bg-base) !important;
 }
+
 .ref-theme [class*="border-[#D4A529]"] {
   border-color: var(--ref-accent) !important;
 }
+
 .ref-theme [class*="text-[#D4A529]"] {
   color: var(--ref-accent) !important;
 }
+
 .ref-theme .rounded-3xl {
   background-color: var(--ref-card) !important;
 }
@@ -451,14 +537,25 @@ shimmer 2s ease forwards;
   letter-spacing: 0.02em;
 }
 
-.no-reveal { opacity: 1 !important; transform: none !important; }
+.no-reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   letter-spacing: 0.01em;
   word-spacing: 0.1em;
 }
 
-p, li, button, label {
+p,
+li,
+button,
+label {
   letter-spacing: 0.0025em;
   word-spacing: 0.07em;
   line-height: 1.55;
@@ -475,6 +572,7 @@ p, li, button, label {
   transform: translateY(0);
   transition: opacity 4500ms ease, transform 4500ms cubic-bezier(0.22, 0.12, 0.36, 1);
 }
+
 .intro-overlay.intro--fading {
   opacity: 0;
   transform: translateY(-18px);
@@ -490,6 +588,7 @@ p, li, button, label {
   transition: opacity 300ms ease, transform 300ms ease;
   will-change: opacity, transform;
 }
+
 .play-button.play-hidden {
   opacity: 0;
   pointer-events: none;

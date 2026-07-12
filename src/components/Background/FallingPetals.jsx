@@ -14,7 +14,7 @@ export default function Petals() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-10">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 5 }}>
       {petals.map((p, i) => (
         <motion.div
           key={i}
@@ -22,12 +22,13 @@ export default function Petals() {
           style={{
             left: `${p.left}%`,
             top: "-10%",
+            willChange: 'transform, opacity'
           }}
           animate={{
             y: ["0vh", "120vh"],
             rotate: [p.rotate, p.rotate + 360],
             x: [0, Math.random() * 40 - 20],
-            opacity: [0, 0.7, 0],
+            opacity: [0, 0.8, 0],
           }}
           transition={{
             duration: p.duration,
@@ -43,7 +44,8 @@ export default function Petals() {
               borderRadius: "60% 40% 60% 40%",
               background: p.type === "marigold" ? `radial-gradient(circle at 30% 30%, var(--accent-pink), var(--accent-pink-2))` : `radial-gradient(circle at 30% 30%, var(--accent-pink-2), rgba(212,165,41,0.6))`,
               filter: "blur(0.3px)",
-              opacity: 0.6,
+              opacity: 0.65,
+              transformOrigin: 'center'
             }}
           />
         </motion.div>
