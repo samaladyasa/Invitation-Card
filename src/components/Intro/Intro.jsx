@@ -7,7 +7,7 @@ export default function Intro({ envelopeOpened, onEnvelopeOpened }) {
         }`}
     >
       <video
-        src="https://res.cloudinary.com/abbjs8kr/video/upload/v1783839994/envelope_design_1__compressed_kwthd2.mp4"
+        src="/envelope_design.mp4"
         autoPlay
         playsInline
         muted
