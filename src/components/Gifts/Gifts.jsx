@@ -135,6 +135,13 @@ export default function Gifts() {
     if ((clear / (img.length / 4)) * 100 > 20) {
       revealed.current = true;
       setShow(true);
+      try {
+        requestAnimationFrame(() => {
+          const card = cardRef.current;
+          if (!card) return;
+          card.querySelectorAll('.reveal-container').forEach((c) => c.classList.add('is-revealed'));
+        });
+      } catch (e) {}
       c.animate(
         [{ opacity: 1 }, { opacity: 0 }],
         { duration: 500, fill: "forwards" }
@@ -167,8 +174,8 @@ export default function Gifts() {
       <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
         {}
         <div className="absolute inset-0 pointer-events-none opacity-100">
-          <img src={giftsBgMobile} alt="Gifts Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
-          <img src={giftsBgDesktop} alt="Gifts Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+          <img src={giftsBgMobile} alt="Gifts Background" className="w-full h-full object-cover block md:hidden"  />
+          <img src={giftsBgDesktop} alt="Gifts Background" className="w-full h-full object-cover hidden md:block"  />
         </div>
 
         <div className="relative z-10 max-w-md mx-auto text-center">
@@ -199,7 +206,7 @@ export default function Gifts() {
             }}
           >
             <div className="absolute inset-0 flex items-center justify-center px-8 text-center">
-              <div className={`transition-all duration-500 ${show ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+              <div className={`transition-all duration-500 reveal-text ${show ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
                 <p className="text-xs uppercase tracking-[4px]" style={{ color: "var(--accent-pink-2)" }}>
                   Thank You
                 </p>
@@ -230,7 +237,7 @@ export default function Gifts() {
                 drawing.current = false;
                 lastPoint.current = null;
               }}
-              // Touch events are attached with non-passive listeners in useEffect
+              
             />
           </div>
         </div>
