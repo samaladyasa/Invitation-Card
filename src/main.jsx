@@ -9,3 +9,8 @@ createRoot(document.getElementById('root')).render(
     <App />
   </StrictMode>,
 )
+try {
+  initRevealText();
+} catch (e) {
+  
+}
