@@ -6,16 +6,12 @@ import Gallery from "../components/Gallery/Gallery";
 import Gifts from "../components/Gifts/Gifts";
 import Footer from "../components/Footer/Footer";
 import WaveDivider from "../components/Dividers/WaveDivider";
-import FallingPetals from "../components/Background/FallingPetals";
 
 export default function Home({ scratched, onScratched, envelopeOpened }) {
   return (
     <div className="relative overflow-x-hidden animate-fade-in-slow" style={{ color: 'var(--text-primary)' }}>
-      <FallingPetals />
-      {}
       <Hero scratched={scratched} onScratched={onScratched} envelopeOpened={envelopeOpened} />
 
-      {}
       <div style={{
         opacity: scratched ? 1 : 0,
         transform: scratched ? "translateY(0)" : "translateY(20px)",
