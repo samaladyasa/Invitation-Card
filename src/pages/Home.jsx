@@ -9,7 +9,7 @@ import WaveDivider from "../components/Dividers/WaveDivider";
 
 export default function Home({ scratched, onScratched, envelopeOpened }) {
   return (
-    <div className="relative overflow-x-hidden animate-fade-in-slow" style={{ color: 'var(--text-primary)' }}>
+    <div className="relative overflow-x-hidden" style={{ color: 'var(--text-primary)' }}>
       <Hero scratched={scratched} onScratched={onScratched} envelopeOpened={envelopeOpened} />
 
       <div style={{
