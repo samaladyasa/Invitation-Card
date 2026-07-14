@@ -23,40 +23,48 @@ export default function App() {
   useEffect(() => {
     gsap.ticker.lagSmoothing(0);
 
-    function update(time) {
-      lenisRef.current?.lenis?.raf(time * 1000);
-      try {
-        ScrollTrigger.update();
-      } catch (e) {}
+    const lenis = lenisRef.current?.lenis;
+    if (lenis) {
+      const scrollHandler = () => {
+        try {
+          ScrollTrigger.update();
+        } catch (e) {}
+      };
+      lenis.on("scroll", scrollHandler);
+      return () => {
+        lenis.off("scroll", scrollHandler);
+      };
     }
+  }, []);
 
-    gsap.ticker.add(update);
+  useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
       ScrollTrigger.refresh();
+      lenisRef.current?.lenis?.resize?.();
     });
     resizeObserver.observe(document.body);
 
     return () => {
       resizeObserver.disconnect();
-      gsap.ticker.remove(update);
     };
   }, []);
 
   return (
     <ReactLenis
-      root
+      root="asChild"
       ref={lenisRef}
-      autoRaf={false}
+      autoRaf={true}
       options={{
-        lerp: 0.05,
+        lerp: 0.08,
         smoothWheel: true,
         syncTouch: true,
+        overscroll: false,
       }}
     >
       <div
         className="app-home-wrapper"
         style={{
-          height: scratched ? "auto" : "100vh",
+          minHeight: scratched ? "auto" : "100vh",
           overflow: scratched ? "visible" : "hidden",
         }}
       >
