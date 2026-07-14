@@ -44,8 +44,8 @@ export default function Countdown() {
 
       {}
       <div className="absolute inset-0 pointer-events-none opacity-100">
-        <img src={cdBgMobile} alt="Countdown Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
-        <img src={cdBgDesktop} alt="Countdown Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+        <img src={cdBgMobile} alt="Countdown Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
+        <img src={cdBgDesktop} alt="Countdown Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
       </div>
 
       <motion.div style={{ scale, opacity, background: 'var(--bg-card)', borderRadius: '35px', border: '1px solid var(--border-accent)' }} className="relative z-10 mx-auto max-w-4xl backdrop-blur-md shadow-2xl px-6 py-12 sm:px-12">
