@@ -169,10 +169,23 @@ export default function ScratchPhoto({ onScratchComplete }) {
             <canvas
                 ref={canvasRef}
                 className="absolute inset-0 w-full h-full cursor-pointer touch-none z-10"
-                onPointerDown={handlePointerDown}
-                onPointerUp={handlePointerUp}
-                onPointerMove={handlePointerMove}
-                onPointerLeave={handlePointerUp}
+                style={{ touchAction: 'none' }}
+                onPointerDown={(e) => {
+                    e.preventDefault();
+                    handlePointerDown(e);
+                }}
+                onPointerUp={(e) => {
+                    e.preventDefault();
+                    handlePointerUp(e);
+                }}
+                onPointerMove={(e) => {
+                    e.preventDefault();
+                    handlePointerMove(e);
+                }}
+                onPointerLeave={(e) => {
+                    e.preventDefault();
+                    handlePointerUp(e);
+                }}
             />
 
             <canvas
