@@ -26,8 +26,8 @@ export default function Footer() {
     <footer ref={ref} className="relative py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
       {}
       <div className="absolute inset-0 pointer-events-none opacity-100">
-        <img src={footerBgMobile} alt="Footer Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
-        <img src={footerBgDesktop} alt="Footer Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+        <img src={footerBgMobile} alt="Footer Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
+        <img src={footerBgDesktop} alt="Footer Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
       </div>
 
       <motion.div initial={{ opacity: 1, y: 0 }} style={{ y, opacity }} className="relative z-10 mx-auto max-w-2xl text-center">
@@ -51,7 +51,7 @@ export default function Footer() {
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="absolute left-0 right-0 bottom-4 z-20 flex justify-center">
           <p className="text-[10px] sm:text-xs font-bold text-black uppercase tracking-widest opacity-80">
-            Crafted by {' '} <a href="http://tekkzy.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black hover:opacity-100 transition-opacity">Tekkzy</a>
+            Crafted by{' '}<a href="http://tekkzy.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black hover:opacity-100 transition-opacity">Tekkzy</a>
           </p>
         </motion.div>
       </motion.div>
