@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { ReactLenis } from "lenis/react";
+import "lenis/dist/lenis.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -43,19 +44,23 @@ export default function App() {
 
   return (
     <ReactLenis
-      root
+      root="asChild"
       ref={lenisRef}
-      autoRaf={false}
+      autoRaf={true}
       options={{
-        lerp: 0.05,
+        lerp: 0.08,
         smoothWheel: true,
         syncTouch: true,
+        wheelMultiplier: 1,
+        touchMultiplier: 1,
+        overscroll: false,
+        autoResize: true,
       }}
     >
       <div
         className="app-home-wrapper"
         style={{
-          height: scratched ? "auto" : "100vh",
+          minHeight: "100vh",
           overflow: scratched ? "visible" : "hidden",
         }}
       >
