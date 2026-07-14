@@ -63,7 +63,7 @@ function CircularDate({ dateStr, delay, start }) {
       animate={{ opacity: start ? 1 : 0, scale: start ? 1 : 0.5 }}
       transition={{ delay: start ? delay : 0, duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
       className="mx-auto mt-4 w-[150px] h-[150px] sm:w-[170px] sm:h-[170px] relative flex items-center justify-center p-2 rounded-full border border-[rgba(0,0,0,0.06)]"
-      style={{ backgroundColor: 'rgba(255,255,255,0.4)', backdropFilter: 'blur(4px)', boxShadow: '0 8px 32px rgba(0,0,0,0.04)' }}
+      style={{ backgroundColor: 'rgba(255,255,255,0.4)', boxShadow: '0 8px 32px rgba(0,0,0,0.04)' }}
     >
       <div className="absolute w-[80%] h-[80%] rounded-full border border-[#d4a529] opacity-30" />
       <motion.svg
@@ -92,7 +92,7 @@ export default function HeroContent({ scratched, onScratched }) {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   useEffect(() => {
-    
+
   }, [scratched]);
 
   return (
@@ -118,7 +118,7 @@ export default function HeroContent({ scratched, onScratched }) {
           </motion.p>
         </div>
 
-        {}
+        { }
         <ScratchPhoto onScratchComplete={onScratched} />
 
         <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: scratched ? 1 : 0 }} transition={{ delay: scratched ? 3.5 : 0, duration: 1.2 }} className="mx-auto mt-2">
