@@ -31,7 +31,7 @@ function GalleryCard({ image, onSelect, paused }) {
         >
             <div className="relative h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-[1.25rem] border" style={{ borderColor: 'rgba(255,255,255,0.06)', backgroundColor: 'var(--bg-base)' }}>
                 {image.src ? (
-                    <img src={image.src} alt={image.alt} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={image.src} alt={image.alt} loading="eager" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center" style={{ background: 'radial-gradient(circle at top, rgba(212,165,41,0.12), transparent 60%)' }}>
                         <Image size={34} className="" style={{ color: 'var(--accent-pink-2)', opacity: 0.3 }} />
@@ -59,8 +59,8 @@ export default function Gallery() {
 
             {}
             <div className="absolute inset-0 pointer-events-none opacity-100">
-                <img src={galleryBgMobile} alt="Gallery Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
-                <img src={galleryBgDesktop} alt="Gallery Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+                <img src={galleryBgMobile} alt="Gallery Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
+                <img src={galleryBgDesktop} alt="Gallery Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
             </div>
 
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative z-10 mb-12 text-center">
@@ -88,7 +88,7 @@ export default function Gallery() {
                         <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute right-6 top-6 z-10 transition-colors" onClick={() => setSelected(null)} style={{ color: 'var(--accent-pink-2)' }}><X size={28} /></motion.button>
                         <motion.div initial={{ scale: 0.86, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.86, opacity: 0 }} transition={{ type: "spring", damping: 24 }} className="max-h-[80vh] max-w-4xl overflow-hidden rounded-[1.5rem]" onClick={(e) => e.stopPropagation()} style={{ border: '1px solid rgba(212,165,41,0.08)' }}>
                             {selected.src ? (
-                                <img src={selected.src} alt={selected.alt} className="max-h-[80vh] w-full object-contain" />
+                                <img src={selected.src} alt={selected.alt} loading="eager" className="max-h-[80vh] w-full object-contain" />
                             ) : (
                                 <div className="flex h-[400px] w-[500px] max-w-[80vw] items-center justify-center" style={{ backgroundColor: 'var(--bg-mid)' }}>
                                     <div className="text-center">
