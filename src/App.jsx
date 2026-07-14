@@ -44,23 +44,19 @@ export default function App() {
 
   return (
     <ReactLenis
-      root="asChild"
+      root
       ref={lenisRef}
-      autoRaf={true}
+      autoRaf={false}
       options={{
-        lerp: 0.08,
+        lerp: 0.05,
         smoothWheel: true,
         syncTouch: true,
-        wheelMultiplier: 1,
-        touchMultiplier: 1,
-        overscroll: false,
-        autoResize: true,
       }}
     >
       <div
         className="app-home-wrapper"
         style={{
-          minHeight: "100vh",
+          height: scratched ? "auto" : "100vh",
           overflow: scratched ? "visible" : "hidden",
         }}
       >
