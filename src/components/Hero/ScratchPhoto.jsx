@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useLenis } from "lenis/react";
 import confetti from "canvas-confetti";
@@ -11,20 +11,70 @@ export default function ScratchPhoto({ onScratchComplete }) {
     const [isDrawing, setIsDrawing] = useState(false);
     const lenis = useLenis();
 
+    const preventTouchScroll = (e) => {
+        if (e.cancelable) {
+            e.preventDefault();
+        }
+    };
 
-    useEffect(() => {
+    const preventWheel = (e) => {
+        if (e.cancelable) {
+            e.preventDefault();
+        }
+    };
+
+    const disablePageScroll = () => {
+        window.addEventListener('touchstart', preventTouchScroll, { passive: false, capture: true });
+        window.addEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
+        window.addEventListener('touchend', preventTouchScroll, { passive: false, capture: true });
+        window.addEventListener('touchcancel', preventTouchScroll, { passive: false, capture: true });
+        window.addEventListener('wheel', preventWheel, { passive: false, capture: true });
+        window.addEventListener('scroll', preventWheel, { passive: false, capture: true });
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.height = '100vh';
+        document.body.style.height = '100vh';
+        document.documentElement.style.overscrollBehavior = 'none';
+        document.body.style.overscrollBehavior = 'none';
+        document.documentElement.style.touchAction = 'none';
+        document.body.style.touchAction = 'none';
+        lenis?.stop();
+    };
+
+    const enablePageScroll = () => {
+        window.removeEventListener('touchstart', preventTouchScroll, { passive: false, capture: true });
+        window.removeEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
+        window.removeEventListener('touchend', preventTouchScroll, { passive: false, capture: true });
+        window.removeEventListener('touchcancel', preventTouchScroll, { passive: false, capture: true });
+        window.removeEventListener('wheel', preventWheel, { passive: false, capture: true });
+        window.removeEventListener('scroll', preventWheel, { passive: false, capture: true });
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.height = '';
+        document.body.style.height = '';
+        document.documentElement.style.overscrollBehavior = '';
+        document.body.style.overscrollBehavior = '';
+        document.documentElement.style.touchAction = '';
+        document.body.style.touchAction = '';
+        lenis?.start();
+    };
+
+    useLayoutEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const preventTouchScroll = (e) => {
-            e.preventDefault();
+        const preventTouchScrollOnCanvas = (e) => {
+            if (e.cancelable) {
+                e.preventDefault();
+            }
         };
 
-        canvas.addEventListener('touchstart', preventTouchScroll, { passive: false });
-        canvas.addEventListener('touchmove', preventTouchScroll, { passive: false });
+        canvas.addEventListener('touchstart', preventTouchScrollOnCanvas, { passive: false, capture: true });
+        canvas.addEventListener('touchmove', preventTouchScrollOnCanvas, { passive: false, capture: true });
+        canvas.addEventListener('touchend', preventTouchScrollOnCanvas, { passive: false, capture: true });
+        canvas.addEventListener('touchcancel', preventTouchScrollOnCanvas, { passive: false, capture: true });
 
         const ctx = canvas.getContext("2d", { willReadFrequently: true });
-
 
         const rect = canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
@@ -33,7 +83,10 @@ export default function ScratchPhoto({ onScratchComplete }) {
         ctx.scale(dpr, dpr);
         canvas.style.width = `${rect.width}px`;
         canvas.style.height = `${rect.height}px`;
+        canvas.style.touchAction = 'none';
 
+        disablePageScroll();
+        window.scrollTo(0, 0);
 
         const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
         gradient.addColorStop(0, "#D9A897");
@@ -45,7 +98,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, rect.width, rect.height);
 
-
         for (let i = 0; i < 4000; i++) {
             ctx.fillStyle = Math.random() > 0.5 ? "rgba(255,255,255,0.25)" : "rgba(100,50,0,0.15)";
             ctx.fillRect(
@@ -56,14 +108,20 @@ export default function ScratchPhoto({ onScratchComplete }) {
         }
 
         return () => {
-            canvas.removeEventListener('touchstart', preventTouchScroll);
-            canvas.removeEventListener('touchmove', preventTouchScroll);
+            canvas.removeEventListener('touchstart', preventTouchScrollOnCanvas);
+            canvas.removeEventListener('touchmove', preventTouchScrollOnCanvas);
+            canvas.removeEventListener('touchend', preventTouchScrollOnCanvas);
+            canvas.removeEventListener('touchcancel', preventTouchScrollOnCanvas);
+            enablePageScroll();
         };
     }, []);
 
+    let pointerLocked = false;
+
     function handlePointerDown(e) {
         if (isScratched) return;
-        lenis?.stop();
+        disablePageScroll();
+        pointerLocked = true;
         setIsDrawing(true);
         e.currentTarget?.setPointerCapture?.(e.pointerId);
         scratch(e);
@@ -71,14 +129,19 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
     function handlePointerUp(e) {
         setIsDrawing(false);
+        pointerLocked = false;
         checkCompletion();
-        lenis?.start();
         e.currentTarget?.releasePointerCapture?.(e.pointerId);
     }
 
     function handlePointerMove(e) {
         if (!isDrawing || isScratched) return;
         scratch(e);
+    }
+
+    function handlePointerCancel() {
+        setIsDrawing(false);
+        pointerLocked = false;
     }
 
     function scratch(e) {
@@ -131,7 +194,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
     function completeReveal() {
         setIsScratched(true);
-
+        enablePageScroll();
 
         if (canvasRef.current) {
             canvasRef.current.style.transition = "opacity 0.8s ease-out";
@@ -139,12 +202,10 @@ export default function ScratchPhoto({ onScratchComplete }) {
             canvasRef.current.style.pointerEvents = "none";
         }
 
-
         if (confettiCanvasRef.current) {
             const myConfetti = confetti.create(confettiCanvasRef.current, {
                 useWorker: true
             });
-
 
             myConfetti({
                 particleCount: 200,
@@ -203,7 +264,21 @@ export default function ScratchPhoto({ onScratchComplete }) {
                 }}
                 onPointerLeave={(e) => {
                     e.preventDefault();
+                    handlePointerCancel();
+                }}
+                onTouchStart={(e) => {
+                    if (e.cancelable) e.preventDefault();
+                }}
+                onTouchMove={(e) => {
+                    if (e.cancelable) e.preventDefault();
+                }}
+                onTouchEnd={(e) => {
+                    if (e.cancelable) e.preventDefault();
                     handlePointerUp(e);
+                }}
+                onTouchCancel={(e) => {
+                    if (e.cancelable) e.preventDefault();
+                    handlePointerCancel();
                 }}
             />
 
