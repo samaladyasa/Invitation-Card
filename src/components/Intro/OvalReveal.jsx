@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import confetti from "canvas-confetti";
 import { Hand } from "lucide-react";
 import weddingData from "../../data/weddingData";
@@ -10,6 +11,7 @@ export default function OvalReveal({ stage, onScratchComplete }) {
     const [isScratched, setIsScratched] = useState(false);
     const [isDrawing, setIsDrawing] = useState(false);
     const [showHint, setShowHint] = useState(true);
+    const lenis = useLenis();
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -44,6 +46,7 @@ export default function OvalReveal({ stage, onScratchComplete }) {
 
     function handlePointerDown(e) {
         if (isScratched) return;
+        lenis?.stop();
         setIsDrawing(true);
         setShowHint(false);
         scratch(e);
@@ -52,6 +55,7 @@ export default function OvalReveal({ stage, onScratchComplete }) {
     function handlePointerUp() {
         setIsDrawing(false);
         checkCompletion();
+        lenis?.start();
     }
 
     function handlePointerMove(e) {
@@ -182,10 +186,23 @@ export default function OvalReveal({ stage, onScratchComplete }) {
                 <canvas
                     ref={canvasRef}
                     className="absolute inset-0 w-full h-full cursor-pointer touch-none"
-                    onPointerDown={handlePointerDown}
-                    onPointerUp={handlePointerUp}
-                    onPointerMove={handlePointerMove}
-                    onPointerLeave={handlePointerUp}
+                    style={{ touchAction: 'none' }}
+                    onPointerDown={(e) => {
+                        e.preventDefault();
+                        handlePointerDown(e);
+                    }}
+                    onPointerUp={(e) => {
+                        e.preventDefault();
+                        handlePointerUp(e);
+                    }}
+                    onPointerMove={(e) => {
+                        e.preventDefault();
+                        handlePointerMove(e);
+                    }}
+                    onPointerLeave={(e) => {
+                        e.preventDefault();
+                        handlePointerUp(e);
+                    }}
                 />
 
                 
