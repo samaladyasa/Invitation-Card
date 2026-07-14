@@ -36,8 +36,8 @@ export default function App() {
       options={{
         lerp: 0.08,
         smoothWheel: true,
-        smoothTouch: false,
-        syncTouch: false,
+        smoothTouch: true,
+        syncTouch: true,
         overscroll: false,
       }}
     >
