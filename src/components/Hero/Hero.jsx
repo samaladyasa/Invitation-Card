@@ -7,11 +7,7 @@ export default function Hero({ scratched, onScratched, envelopeOpened }) {
       id="hero"
       className="relative min-h-screen overflow-hidden"
     >
-      {envelopeOpened && (
-        <>
-          <HeroBackground />
-        </>
-      )}
+      <HeroBackground />
       <HeroContent scratched={scratched} onScratched={onScratched} />
     </section>
   );
