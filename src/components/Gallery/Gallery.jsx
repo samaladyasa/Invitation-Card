@@ -14,13 +14,10 @@ const galleryImages = [
     { id: 6, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlyc7Q_dTUJ74gClxW0KCpxquyC170IInDgfFQcPI3BxeBHe6ErYNr7NE&s=10', alt: "Wedding moment 6" },
 ];
 
-function GalleryCard({ image, onSelect, paused }) {
+function GalleryCard({ image, paused }) {
     return (
-        <motion.button
-            type="button"
+        <motion.div
             whileHover={{ scale: 1.02, y: -4 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onSelect(image)}
             className="group relative flex min-h-[300px] w-[240px] md:w-[320px] lg:w-[360px] shrink-0 flex-col overflow-hidden rounded-[1.75rem] p-3 md:p-4 text-left transition-all duration-300"
             style={{
                 opacity: paused ? 0.9 : 1,
@@ -38,19 +35,12 @@ function GalleryCard({ image, onSelect, paused }) {
                         <p className="mt-3 text-[10px] uppercase tracking-[0.35em]" style={{ color: 'var(--accent-pink-2)', opacity: 0.3 }}>Photo {image.id}</p>
                     </div>
                 )}
-                <div className="absolute inset-0 flex items-center justify-center rounded-[1.25rem] opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="rounded-full p-3" style={{ border: '1px solid rgba(212,165,41,0.12)', backgroundColor: 'rgba(13,10,10,0.55)', color: 'var(--accent-pink-2)' }}>
-                        <ZoomIn size={18} />
-                    </div>
-                </div>
             </div>
-            {}
-        </motion.button>
+        </motion.div>
     );
 }
 
 export default function Gallery() {
-    const [selected, setSelected] = useState(null);
     const [paused, setPaused] = useState(false);
     const trackImages = [...galleryImages, ...galleryImages];
 
@@ -75,32 +65,13 @@ export default function Gallery() {
                     <div className="flex w-fit">
                         <motion.div className="flex gap-4 md:gap-8 px-2 md:px-4" animate={{ x: ["0%", "-50%"] }} transition={{ duration: 35, ease: "linear", repeat: Infinity, repeatType: "loop" }} style={{ animationPlayState: paused ? 'paused' : 'running' }}>
                             {trackImages.map((img, i) => (
-                                <GalleryCard key={`${img.id}-${i}`} image={img} onSelect={setSelected} paused={paused} />
+                                <GalleryCard key={`${img.id}-${i}`} image={img} paused={paused} />
                             ))}
                         </motion.div>
                     </div>
                 </div>
             </div>
-
-            <AnimatePresence>
-                {selected && (
-                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] flex items-center justify-center p-6" onClick={() => setSelected(null)} style={{ backgroundColor: 'rgba(0,0,0,0.9)' }}>
-                        <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="absolute right-6 top-6 z-10 transition-colors" onClick={() => setSelected(null)} style={{ color: 'var(--accent-pink-2)' }}><X size={28} /></motion.button>
-                        <motion.div initial={{ scale: 0.86, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.86, opacity: 0 }} transition={{ type: "spring", damping: 24 }} className="max-h-[80vh] max-w-4xl overflow-hidden rounded-[1.5rem]" onClick={(e) => e.stopPropagation()} style={{ border: '1px solid rgba(212,165,41,0.08)' }}>
-                            {selected.src ? (
-                                <img src={selected.src} alt={selected.alt} loading="eager" className="max-h-[80vh] w-full object-contain" />
-                            ) : (
-                                <div className="flex h-[400px] w-[500px] max-w-[80vw] items-center justify-center" style={{ backgroundColor: 'var(--bg-mid)' }}>
-                                    <div className="text-center">
-                                        <Image size={64} className="mx-auto" style={{ color: 'var(--accent-pink-2)', opacity: 0.3 }} />
-                                        <p className="mt-4 text-sm" style={{ color: 'var(--accent-pink-2)', opacity: 0.4 }}>Image placeholder</p>
-                                    </div>
-                                </div>
-                            )}
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Click-to-zoom disabled: no modal rendered */}
         </section>
     );
 }
