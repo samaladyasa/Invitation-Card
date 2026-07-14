@@ -234,7 +234,7 @@ export default function Gifts() {
                 drawing.current = false;
                 lastPoint.current = null;
               }}
-            // Touch events are attached with non-passive listeners in useEffect
+        
             />
           </div>
         </div>
