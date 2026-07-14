@@ -174,8 +174,8 @@ export default function Gifts() {
       <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
         {}
         <div className="absolute inset-0 pointer-events-none opacity-100">
-          <img src={giftsBgMobile} alt="Gifts Background" className="w-full h-full object-cover block md:hidden"  />
-          <img src={giftsBgDesktop} alt="Gifts Background" className="w-full h-full object-cover hidden md:block"  />
+          <img src={giftsBgMobile} alt="Gifts Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
+          <img src={giftsBgDesktop} alt="Gifts Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
         </div>
 
         <div className="relative z-10 max-w-md mx-auto text-center">
@@ -237,7 +237,7 @@ export default function Gifts() {
                 drawing.current = false;
                 lastPoint.current = null;
               }}
-              
+              // Touch events are attached with non-passive listeners in useEffect
             />
           </div>
         </div>
