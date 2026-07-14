@@ -38,10 +38,10 @@ export default function Gifts() {
     };
 
     const g = ctx.createLinearGradient(0, 0, width, height);
-    g.addColorStop(0, "#FFB6C1"); 
-    g.addColorStop(0.3, "#FF8DA1"); 
-    g.addColorStop(0.65, "#FFB6C1"); 
-    g.addColorStop(1, "#FFC0CB"); 
+    g.addColorStop(0, "#FFB6C1");
+    g.addColorStop(0.3, "#FF8DA1");
+    g.addColorStop(0.65, "#FFB6C1");
+    g.addColorStop(1, "#FFC0CB");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, width, height);
 
@@ -141,7 +141,7 @@ export default function Gifts() {
           if (!card) return;
           card.querySelectorAll('.reveal-container').forEach((c) => c.classList.add('is-revealed'));
         });
-      } catch (e) {}
+      } catch (e) { }
       c.animate(
         [{ opacity: 1 }, { opacity: 0 }],
         { duration: 500, fill: "forwards" }
@@ -172,10 +172,10 @@ export default function Gifts() {
   return (
     <ScrollReveal>
       <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
-        {}
+        { }
         <div className="absolute inset-0 pointer-events-none opacity-100">
-          <img src={giftsBgMobile} alt="Gifts Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
-          <img src={giftsBgDesktop} alt="Gifts Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
+          <img src={giftsBgMobile} alt="Gifts Background" loading="eager" className="w-full h-full object-cover block md:hidden" />
+          <img src={giftsBgDesktop} alt="Gifts Background" loading="eager" className="w-full h-full object-cover hidden md:block" />
         </div>
 
         <div className="relative z-10 max-w-md mx-auto text-center">
@@ -185,7 +185,6 @@ export default function Gifts() {
               border: "1px solid rgba(0,0,0,0.1)",
               background: "rgba(255,255,255,0.5)",
               boxShadow: "0 6px 14px rgba(0,0,0,0.12)",
-              backdropFilter: "blur(2px)",
             }}
           >
             <Gift size={14} /> Gifts
@@ -199,7 +198,7 @@ export default function Gifts() {
 
           <div
             ref={cardRef}
-            className="relative mt-8 h-56 rounded-3xl shadow-2xl overflow-hidden backdrop-blur-md"
+            className="relative mt-8 h-56 rounded-3xl shadow-2xl overflow-hidden"
             style={{
               border: "1px solid var(--border-accent)",
               background: "var(--bg-card)",
@@ -237,7 +236,7 @@ export default function Gifts() {
                 drawing.current = false;
                 lastPoint.current = null;
               }}
-              // Touch events are attached with non-passive listeners in useEffect
+            
             />
           </div>
         </div>
