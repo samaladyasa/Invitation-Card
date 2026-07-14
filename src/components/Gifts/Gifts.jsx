@@ -13,6 +13,7 @@ export default function Gifts() {
   const drawing = useRef(false);
   const revealed = useRef(false);
   const lastPoint = useRef(null);
+  const scrollPosition = useRef(0);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -56,40 +57,90 @@ export default function Gifts() {
     ctx.fillText("Scratch here", width / 2, height / 2);
   }, []);
 
+  const preventTouchScroll = (e) => {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+  };
+
   useEffect(() => {
     const c = canvasRef.current;
     if (!c) return;
 
+    const handlePointerDown = (e) => {
+      if (e.cancelable) e.preventDefault();
+      drawing.current = true;
+      lastPoint.current = null;
+      if (e.currentTarget.setPointerCapture) {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      }
+      scratch(e);
+    };
+
+    const handlePointerMove = (e) => {
+      if (!drawing.current) return;
+      if (e.cancelable) e.preventDefault();
+      scratch(e);
+    };
+
+    const handlePointerUp = (e) => {
+      if (e.cancelable) e.preventDefault();
+      drawing.current = false;
+      lastPoint.current = null;
+      if (e.currentTarget.releasePointerCapture) {
+        e.currentTarget.releasePointerCapture(e.pointerId);
+      }
+    };
+
+    const handlePointerCancel = handlePointerUp;
+
     const handleTouchStart = (e) => {
+      if (e.cancelable) e.preventDefault();
       drawing.current = true;
       lastPoint.current = null;
       scratch(e);
     };
 
     const handleTouchMove = (e) => {
+      if (!drawing.current) return;
+      if (e.cancelable) e.preventDefault();
       scratch(e);
     };
 
-    const handleTouchEnd = () => {
+    const handleTouchEnd = (e) => {
+      if (e.cancelable) e.preventDefault();
       drawing.current = false;
       lastPoint.current = null;
     };
 
-    const handleTouchCancel = () => {
-      drawing.current = false;
-      lastPoint.current = null;
+    const handleTouchCancel = handleTouchEnd;
+
+    const handleWheel = (e) => {
+      if (drawing.current && e.cancelable) {
+        e.preventDefault();
+      }
     };
 
+    c.addEventListener('pointerdown', handlePointerDown, { passive: false });
+    c.addEventListener('pointermove', handlePointerMove, { passive: false });
+    c.addEventListener('pointerup', handlePointerUp, { passive: false });
+    c.addEventListener('pointercancel', handlePointerCancel, { passive: false });
     c.addEventListener('touchstart', handleTouchStart, { passive: false });
     c.addEventListener('touchmove', handleTouchMove, { passive: false });
     c.addEventListener('touchend', handleTouchEnd, { passive: false });
     c.addEventListener('touchcancel', handleTouchCancel, { passive: false });
+    c.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
-      c.removeEventListener('touchstart', handleTouchStart);
-      c.removeEventListener('touchmove', handleTouchMove);
-      c.removeEventListener('touchend', handleTouchEnd);
-      c.removeEventListener('touchcancel', handleTouchCancel);
+      c.removeEventListener('pointerdown', handlePointerDown, { passive: false });
+      c.removeEventListener('pointermove', handlePointerMove, { passive: false });
+      c.removeEventListener('pointerup', handlePointerUp, { passive: false });
+      c.removeEventListener('pointercancel', handlePointerCancel, { passive: false });
+      c.removeEventListener('touchstart', handleTouchStart, { passive: false });
+      c.removeEventListener('touchmove', handleTouchMove, { passive: false });
+      c.removeEventListener('touchend', handleTouchEnd, { passive: false });
+      c.removeEventListener('touchcancel', handleTouchCancel, { passive: false });
+      c.removeEventListener('wheel', handleWheel, { passive: false });
     };
   }, [canvasRef.current]);
 
@@ -219,22 +270,9 @@ export default function Gifts() {
             </div>
             <canvas
               ref={canvasRef}
-              className="absolute inset-0 cursor-pointer touch-none"
-              onMouseDown={(e) => {
-                drawing.current = true;
-                lastPoint.current = null;
-                scratch(e);
-              }}
-              onMouseMove={scratch}
-              onMouseUp={() => {
-                drawing.current = false;
-                lastPoint.current = null;
-              }}
-              onMouseLeave={() => {
-                drawing.current = false;
-                lastPoint.current = null;
-              }}
-        
+              className="absolute inset-0 cursor-pointer"
+              style={{ touchAction: 'none', userSelect: 'none' }}
+              draggable={false}
             />
           </div>
         </div>
