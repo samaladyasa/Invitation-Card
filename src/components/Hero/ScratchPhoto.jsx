@@ -12,9 +12,12 @@ export default function ScratchPhoto({ onScratchComplete }) {
     const lenis = useLenis();
 
     const preventTouchScroll = (e) => {
-        if (e.cancelable) {
-            e.preventDefault();
-        }
+        if (!e.cancelable) return;
+        try {
+            const interactive = e.target && e.target.closest && e.target.closest('a, button, input, textarea, select, [role="button"], [role="link"], [data-allow-touch]');
+            if (interactive) return;
+        } catch (err) {}
+        e.preventDefault();
     };
 
     const preventWheel = (e) => {
@@ -85,8 +88,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
         canvas.style.height = `${rect.height}px`;
         canvas.style.touchAction = 'none';
 
-        disablePageScroll();
-        window.scrollTo(0, 0);
+        // Do not disable page scroll on mount — only lock when the user starts scratching.
 
         const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
         gradient.addColorStop(0, "#D9A897");
@@ -251,33 +253,28 @@ export default function ScratchPhoto({ onScratchComplete }) {
                 className="absolute inset-0 w-full h-full cursor-pointer touch-none z-10"
                 style={{ touchAction: 'none' }}
                 onPointerDown={(e) => {
-                    e.preventDefault();
                     handlePointerDown(e);
                 }}
                 onPointerUp={(e) => {
-                    e.preventDefault();
                     handlePointerUp(e);
                 }}
                 onPointerMove={(e) => {
-                    e.preventDefault();
                     handlePointerMove(e);
                 }}
                 onPointerLeave={(e) => {
-                    e.preventDefault();
                     handlePointerCancel();
                 }}
+                // touch events are handled by native listeners added in useLayoutEffect
                 onTouchStart={(e) => {
-                    if (e.cancelable) e.preventDefault();
+                    handlePointerDown(e);
                 }}
                 onTouchMove={(e) => {
-                    if (e.cancelable) e.preventDefault();
+                    handlePointerMove(e);
                 }}
                 onTouchEnd={(e) => {
-                    if (e.cancelable) e.preventDefault();
                     handlePointerUp(e);
                 }}
                 onTouchCancel={(e) => {
-                    if (e.cancelable) e.preventDefault();
                     handlePointerCancel();
                 }}
             />
