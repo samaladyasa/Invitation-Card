@@ -51,7 +51,7 @@ export default function Footer() {
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="absolute left-0 right-0 bottom-4 z-20 flex justify-center">
           <p className="text-[10px] sm:text-xs font-bold text-black uppercase tracking-widest opacity-80">
-            Crafted by  <a href="http://tekkzy.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black hover:opacity-100 transition-opacity">Tekkzy</a>
+            Crafted by {' '} <a href="http://tekkzy.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-black hover:opacity-100 transition-opacity">Tekkzy</a>
           </p>
         </motion.div>
       </motion.div>
