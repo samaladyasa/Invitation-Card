@@ -23,7 +23,7 @@ export default function Footer() {
   const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <footer ref={ref} className="relative py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
+    <footer ref={ref} className="relative py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)', zIndex: 99999, position: 'relative', pointerEvents: 'auto' }}>
       {}
       <div className="absolute inset-0 pointer-events-none opacity-100">
         <img src={footerBgMobile} alt="Footer Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
@@ -50,8 +50,8 @@ export default function Footer() {
         <GoldDivider className="mt-12" />
 
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="absolute left-0 right-0 bottom-4 z-20 flex justify-center">
-          <p className="text-sm font-black uppercase tracking-widest" style={{ color: '#000000' }}>
-            Crafted by{' '}<a href="http://tekkzy.com/" target="_blank" rel="noopener noreferrer" className="font-black no-underline" style={{ color: '#000000' }}>Tekkzy</a>
+            <p className="text-sm font-black uppercase tracking-widest" style={{ color: '#000000' }}>
+            Crafted by{' '}<a href="https://tekkzy.com/" target="_blank" rel="noopener noreferrer" className="font-black no-underline" style={{ color: '#000000' }}>Tekkzy</a>
           </p>
         </motion.div>
       </motion.div>
