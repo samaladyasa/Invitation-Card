@@ -10,19 +10,17 @@
 
   --accent-pink: #F3AEB7;
   --accent-pink-2: #D4A529;
-  
+
   --accent-sand: #FFF7F8;
 
   --text-primary: #3d3032;
-  
+
   --text-secondary: #74585B;
   --text-muted: #A87F85;
   --border-accent: rgba(212, 165, 41, 0.3);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html {}
 
 body {
   margin: 0;
