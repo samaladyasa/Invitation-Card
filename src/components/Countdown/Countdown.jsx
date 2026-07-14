@@ -5,7 +5,7 @@ import cdBgMobile from "../../assets/cdbm.png";
 
 function ScrollRevealText({ children, className = "" }) {
   return (
-    <motion.div initial={{ opacity: 0, y: 30, filter: "blur(6px)" }} whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>
+    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} className={className}>{children}</motion.div>
   );
 }
 
@@ -42,13 +42,13 @@ export default function Countdown() {
   return (
     <section id="countdown" ref={sectionRef} className="relative overflow-hidden py-20 px-5" style={{ backgroundColor: 'var(--bg-deep)' }}>
 
-      {}
+      { }
       <div className="absolute inset-0 pointer-events-none opacity-100">
-        <img src={cdBgMobile} alt="Countdown Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
-        <img src={cdBgDesktop} alt="Countdown Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
+        <img src={cdBgMobile} alt="Countdown Background" loading="eager" className="w-full h-full object-cover block md:hidden" />
+        <img src={cdBgDesktop} alt="Countdown Background" loading="eager" className="w-full h-full object-cover hidden md:block" />
       </div>
 
-      <motion.div style={{ scale, opacity, background: 'var(--bg-card)', borderRadius: '35px', border: '1px solid var(--border-accent)' }} className="relative z-10 mx-auto max-w-4xl backdrop-blur-md shadow-2xl px-6 py-12 sm:px-12">
+      <motion.div style={{ scale, opacity, background: 'var(--bg-card)', borderRadius: '35px', border: '1px solid var(--border-accent)' }} className="relative z-10 mx-auto max-w-4xl shadow-2xl px-6 py-12 sm:px-12">
         <ScrollRevealText className="text-center"><p className="uppercase tracking-[7px] text-xs" style={{ color: 'var(--accent-pink-2)', opacity: 0.7 }}>Counting Down To Forever</p></ScrollRevealText>
         <ScrollRevealText className="text-center"><h2 className="mt-4 font-script text-4xl sm:text-5xl" style={{ color: 'var(--text-primary)' }}>Our Wedding Day</h2></ScrollRevealText>
         <div className="mx-auto mt-6 h-[1px] w-16" style={{ background: 'linear-gradient(to right, transparent, var(--accent-pink-2), transparent)' }} />
