@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ReactLenis } from "lenis/react";
+import { ReactLenis, useLenis } from "lenis/react";
 import "lenis/dist/lenis.css";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -20,6 +20,8 @@ export default function App() {
     document.documentElement.style.overflow = scratched ? "auto" : "hidden";
   }, [scratched]);
 
+  useLenis(ScrollTrigger.update);
+
   useEffect(() => {
     gsap.ticker.lagSmoothing(0);
 
@@ -29,16 +31,8 @@ export default function App() {
 
     gsap.ticker.add(update);
 
-    const lenis = lenisRef.current?.lenis;
-    if (lenis) {
-      lenis.on("scroll", ScrollTrigger.update);
-    }
-
     return () => {
       gsap.ticker.remove(update);
-      if (lenis) {
-        lenis.off("scroll", ScrollTrigger.update);
-      }
     };
   }, []);
 
