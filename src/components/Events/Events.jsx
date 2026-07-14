@@ -31,8 +31,8 @@ export default function Events() {
     <section id="events" className="relative px-6 py-20 overflow-hidden" style={{ backgroundColor: 'var(--bg-deep)' }}>
       {}
       <div className="absolute inset-0 pointer-events-none">
-        <img src={eventsBgMobile} alt="Events Background" className="w-full h-full object-cover block md:hidden" loading="lazy" />
-        <img src={eventsBgDesktop} alt="Events Background" className="w-full h-full object-cover hidden md:block" loading="lazy" />
+        <img src={eventsBgMobile} alt="Events Background" loading="eager" className="w-full h-full object-cover block md:hidden"  />
+        <img src={eventsBgDesktop} alt="Events Background" loading="eager" className="w-full h-full object-cover hidden md:block"  />
       </div>
 
       <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="relative z-10 text-center mb-12">
@@ -57,7 +57,7 @@ export default function Events() {
                   <div className="relative w-40 h-40 md:w-48 md:h-48">
                     <div className="absolute inset-0 overflow-hidden blob-shape" style={{ background: `linear-gradient(135deg, var(--accent-pink-2) 0%, rgba(255,255,255,0) 60%)` }}>
                       {event.image ? (
-                        <img src={event.image} alt={event.title} loading="lazy" className="h-full w-full object-cover" />
+                        <img src={event.image} alt={event.title} loading="eager" className="h-full w-full object-cover" />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center border border-white/30 bg-white/10 text-[10px] uppercase tracking-[3px] text-white/50">
                           Add Photo
