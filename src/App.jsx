@@ -24,16 +24,6 @@ export default function App() {
 
   useEffect(() => {
     gsap.ticker.lagSmoothing(0);
-
-    function update(time) {
-      lenisRef.current?.lenis?.raf(time * 1000);
-    }
-
-    gsap.ticker.add(update);
-
-    return () => {
-      gsap.ticker.remove(update);
-    };
   }, []);
 
 
@@ -42,7 +32,7 @@ export default function App() {
     <ReactLenis
       root
       ref={lenisRef}
-      autoRaf={false}
+      autoRaf={true}
       options={{
         lerp: 0.08,
         smoothWheel: true,
