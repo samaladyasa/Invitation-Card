@@ -61,24 +61,9 @@ export default function ScratchPhoto({ onScratchComplete }) {
         };
     }, []);
 
-    function lockScroll() {
-        document.body.style.overflow = "hidden";
-        document.documentElement.style.overflow = "hidden";
-        document.body.style.overscrollBehavior = "none";
-        document.documentElement.style.overscrollBehavior = "none";
-    }
-
-    function unlockScroll() {
-        document.body.style.overflow = "";
-        document.documentElement.style.overflow = "";
-        document.body.style.overscrollBehavior = "";
-        document.documentElement.style.overscrollBehavior = "";
-    }
-
     function handlePointerDown(e) {
         if (isScratched) return;
         lenis?.stop();
-        lockScroll();
         setIsDrawing(true);
         e.currentTarget?.setPointerCapture?.(e.pointerId);
         scratch(e);
@@ -88,7 +73,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
         setIsDrawing(false);
         checkCompletion();
         lenis?.start();
-        unlockScroll();
         e.currentTarget?.releasePointerCapture?.(e.pointerId);
     }
 
