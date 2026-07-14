@@ -43,7 +43,6 @@ export default function Petals() {
               height: p.size * 1.4,
               borderRadius: "60% 40% 60% 40%",
               background: p.type === "marigold" ? `radial-gradient(circle at 30% 30%, var(--accent-pink), var(--accent-pink-2))` : `radial-gradient(circle at 30% 30%, var(--accent-pink-2), rgba(212,165,41,0.6))`,
-              filter: "blur(0.3px)",
               opacity: 0.65,
               transformOrigin: 'center'
             }}
