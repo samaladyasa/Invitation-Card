@@ -36,17 +36,7 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(() => {
-      ScrollTrigger.refresh();
-      lenisRef.current?.lenis?.resize?.();
-    });
-    resizeObserver.observe(document.body);
 
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
 
   return (
     <ReactLenis
