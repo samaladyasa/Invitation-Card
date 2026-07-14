@@ -24,6 +24,9 @@ export default function App() {
 
     function update(time) {
       lenisRef.current?.lenis?.raf(time * 1000);
+      try {
+        ScrollTrigger.update();
+      } catch (e) {}
     }
 
     gsap.ticker.add(update);
