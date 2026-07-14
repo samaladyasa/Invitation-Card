@@ -272,7 +272,6 @@ label {
 .indian-card {
   background: linear-gradient(135deg, var(--bg-card), var(--bg-base));
   border: 1px solid var(--border-gold);
-  backdrop-filter: blur(10px);
 }
 
 @keyframes shimmer {
