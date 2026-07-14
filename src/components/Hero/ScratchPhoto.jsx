@@ -158,7 +158,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
         if (confettiCanvasRef.current) {
             const myConfetti = confetti.create(confettiCanvasRef.current, {
-                resize: true,
                 useWorker: true
             });
 
