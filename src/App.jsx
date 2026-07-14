@@ -23,18 +23,15 @@ export default function App() {
   useEffect(() => {
     gsap.ticker.lagSmoothing(0);
 
-    const lenis = lenisRef.current?.lenis;
-    if (lenis) {
-      const scrollHandler = () => {
-        try {
-          ScrollTrigger.update();
-        } catch (e) {}
-      };
-      lenis.on("scroll", scrollHandler);
-      return () => {
-        lenis.off("scroll", scrollHandler);
-      };
+    function update(time) {
+      lenisRef.current?.lenis?.raf(time * 1000);
     }
+
+    gsap.ticker.add(update);
+
+    return () => {
+      gsap.ticker.remove(update);
+    };
   }, []);
 
   useEffect(() => {
@@ -51,9 +48,9 @@ export default function App() {
 
   return (
     <ReactLenis
-      root="asChild"
+      root
       ref={lenisRef}
-      autoRaf={true}
+      autoRaf={false}
       options={{
         lerp: 0.08,
         smoothWheel: true,
