@@ -29,8 +29,16 @@ export default function App() {
 
     gsap.ticker.add(update);
 
+    const lenis = lenisRef.current?.lenis;
+    if (lenis) {
+      lenis.on("scroll", ScrollTrigger.update);
+    }
+
     return () => {
       gsap.ticker.remove(update);
+      if (lenis) {
+        lenis.off("scroll", ScrollTrigger.update);
+      }
     };
   }, []);
 
