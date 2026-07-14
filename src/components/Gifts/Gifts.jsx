@@ -170,14 +170,12 @@ export default function Gifts() {
   };
 
   return (
-    <ScrollReveal>
-      <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
-        { }
-        <div className="absolute inset-0 pointer-events-none opacity-100">
-          <img src={giftsBgMobile} alt="Gifts Background" loading="eager" className="w-full h-full object-cover block md:hidden" />
-          <img src={giftsBgDesktop} alt="Gifts Background" loading="eager" className="w-full h-full object-cover hidden md:block" />
-        </div>
-
+    <section id="gifts" className="relative py-20 px-5 overflow-hidden" style={{ backgroundColor: "var(--bg-deep)" }}>
+      <div className="absolute inset-0 pointer-events-none opacity-100">
+        <img src={giftsBgMobile} alt="Gifts Background" loading="eager" className="w-full h-full object-cover block md:hidden" />
+        <img src={giftsBgDesktop} alt="Gifts Background" loading="eager" className="w-full h-full object-cover hidden md:block" />
+      </div>
+      <ScrollReveal>
         <div className="relative z-10 max-w-md mx-auto text-center">
           <span
             className="inline-flex items-center gap-2 rounded-full px-7 py-2 text-xs uppercase tracking-[4px] shadow font-bold text-black"
@@ -236,11 +234,11 @@ export default function Gifts() {
                 drawing.current = false;
                 lastPoint.current = null;
               }}
-            
+            // Touch events are attached with non-passive listeners in useEffect
             />
           </div>
         </div>
-      </section>
-    </ScrollReveal>
+      </ScrollReveal>
+    </section>
   );
 }
