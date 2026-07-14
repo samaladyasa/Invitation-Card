@@ -1,6 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useEffect } from "react";
-import confetti from "canvas-confetti";
 import weddingData from "../../data/weddingData";
 import ScratchPhoto from "./ScratchPhoto";
 
