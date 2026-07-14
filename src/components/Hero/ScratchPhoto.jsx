@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { useLenis } from "lenis/react";
 import confetti from "canvas-confetti";
 
 export default function ScratchPhoto({ onScratchComplete }) {
@@ -8,6 +9,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     const confettiCanvasRef = useRef(null);
     const [isScratched, setIsScratched] = useState(false);
     const [isDrawing, setIsDrawing] = useState(false);
+    const lenis = useLenis();
 
     
     useEffect(() => {
@@ -48,6 +50,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
     function handlePointerDown(e) {
         if (isScratched) return;
+        lenis?.stop();
         setIsDrawing(true);
         scratch(e);
     }
@@ -55,6 +58,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     function handlePointerUp() {
         setIsDrawing(false);
         checkCompletion();
+        lenis?.start();
     }
 
     function handlePointerMove(e) {
