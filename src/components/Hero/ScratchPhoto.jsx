@@ -10,6 +10,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     const [isScratched, setIsScratched] = useState(false);
     const [isDrawing, setIsDrawing] = useState(false);
     const lenis = useLenis();
+    const scrollLockActiveRef = useRef(false);
 
     const preventTouchScroll = (e) => {
         if (!e.cancelable) return;
@@ -27,16 +28,15 @@ export default function ScratchPhoto({ onScratchComplete }) {
     };
 
     const disablePageScroll = () => {
+        if (scrollLockActiveRef.current) return;
+
+        scrollLockActiveRef.current = true;
         window.addEventListener('touchstart', preventTouchScroll, { passive: false, capture: true });
         window.addEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
         window.addEventListener('touchend', preventTouchScroll, { passive: false, capture: true });
         window.addEventListener('touchcancel', preventTouchScroll, { passive: false, capture: true });
         window.addEventListener('wheel', preventWheel, { passive: false, capture: true });
         window.addEventListener('scroll', preventWheel, { passive: false, capture: true });
-        document.documentElement.style.overflow = 'hidden';
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.height = '100vh';
-        document.body.style.height = '100vh';
         document.documentElement.style.overscrollBehavior = 'none';
         document.body.style.overscrollBehavior = 'none';
         document.documentElement.style.touchAction = 'none';
@@ -45,16 +45,15 @@ export default function ScratchPhoto({ onScratchComplete }) {
     };
 
     const enablePageScroll = () => {
+        if (!scrollLockActiveRef.current) return;
+
+        scrollLockActiveRef.current = false;
         window.removeEventListener('touchstart', preventTouchScroll, { passive: false, capture: true });
         window.removeEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
         window.removeEventListener('touchend', preventTouchScroll, { passive: false, capture: true });
         window.removeEventListener('touchcancel', preventTouchScroll, { passive: false, capture: true });
         window.removeEventListener('wheel', preventWheel, { passive: false, capture: true });
         window.removeEventListener('scroll', preventWheel, { passive: false, capture: true });
-        document.documentElement.style.overflow = '';
-        document.body.style.overflow = '';
-        document.documentElement.style.height = '';
-        document.body.style.height = '';
         document.documentElement.style.overscrollBehavior = '';
         document.body.style.overscrollBehavior = '';
         document.documentElement.style.touchAction = '';
@@ -132,6 +131,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     function handlePointerUp(e) {
         setIsDrawing(false);
         pointerLocked = false;
+        enablePageScroll();
         checkCompletion();
         e.currentTarget?.releasePointerCapture?.(e.pointerId);
     }
@@ -144,6 +144,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     function handlePointerCancel() {
         setIsDrawing(false);
         pointerLocked = false;
+        enablePageScroll();
     }
 
     function scratch(e) {
@@ -197,6 +198,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     function completeReveal() {
         setIsScratched(true);
         enablePageScroll();
+        onScratchComplete?.();
 
         if (canvasRef.current) {
             canvasRef.current.style.transition = "opacity 0.8s ease-out";
