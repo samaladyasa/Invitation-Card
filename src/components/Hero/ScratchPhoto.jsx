@@ -1,65 +1,12 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { useLenis } from "lenis/react";
 import confetti from "canvas-confetti";
 
 export default function ScratchPhoto({ onScratchComplete }) {
     const canvasRef = useRef(null);
-    const containerRef = useRef(null);
     const confettiCanvasRef = useRef(null);
     const [isScratched, setIsScratched] = useState(false);
     const [isDrawing, setIsDrawing] = useState(false);
-    const lenis = useLenis();
-    const scrollLockActiveRef = useRef(false);
 
-    const preventTouchScroll = (e) => {
-        if (!e.cancelable) return;
-        try {
-            const interactive = e.target && e.target.closest && e.target.closest('a, button, input, textarea, select, [role="button"], [role="link"], [data-allow-touch]');
-            if (interactive) return;
-        } catch (err) {}
-        e.preventDefault();
-    };
-
-    const preventWheel = (e) => {
-        if (e.cancelable) {
-            e.preventDefault();
-        }
-    };
-
-    const disablePageScroll = () => {
-        if (scrollLockActiveRef.current) return;
-
-        scrollLockActiveRef.current = true;
-        window.addEventListener('touchstart', preventTouchScroll, { passive: false, capture: true });
-        window.addEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
-        window.addEventListener('touchend', preventTouchScroll, { passive: false, capture: true });
-        window.addEventListener('touchcancel', preventTouchScroll, { passive: false, capture: true });
-        window.addEventListener('wheel', preventWheel, { passive: false, capture: true });
-        window.addEventListener('scroll', preventWheel, { passive: false, capture: true });
-        document.documentElement.style.overscrollBehavior = 'none';
-        document.body.style.overscrollBehavior = 'none';
-        document.documentElement.style.touchAction = 'none';
-        document.body.style.touchAction = 'none';
-        lenis?.stop();
-    };
-
-    const enablePageScroll = () => {
-        if (!scrollLockActiveRef.current) return;
-
-        scrollLockActiveRef.current = false;
-        window.removeEventListener('touchstart', preventTouchScroll, { passive: false, capture: true });
-        window.removeEventListener('touchmove', preventTouchScroll, { passive: false, capture: true });
-        window.removeEventListener('touchend', preventTouchScroll, { passive: false, capture: true });
-        window.removeEventListener('touchcancel', preventTouchScroll, { passive: false, capture: true });
-        window.removeEventListener('wheel', preventWheel, { passive: false, capture: true });
-        window.removeEventListener('scroll', preventWheel, { passive: false, capture: true });
-        document.documentElement.style.overscrollBehavior = '';
-        document.body.style.overscrollBehavior = '';
-        document.documentElement.style.touchAction = '';
-        document.body.style.touchAction = '';
-        lenis?.start();
-    };
 
     useLayoutEffect(() => {
         const canvas = canvasRef.current;
@@ -113,7 +60,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
             canvas.removeEventListener('touchmove', preventTouchScrollOnCanvas);
             canvas.removeEventListener('touchend', preventTouchScrollOnCanvas);
             canvas.removeEventListener('touchcancel', preventTouchScrollOnCanvas);
-            enablePageScroll();
         };
     }, []);
 
@@ -121,7 +67,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
     function handlePointerDown(e) {
         if (isScratched) return;
-        disablePageScroll();
         pointerLocked = true;
         setIsDrawing(true);
         e.currentTarget?.setPointerCapture?.(e.pointerId);
@@ -131,7 +76,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
     function handlePointerUp(e) {
         setIsDrawing(false);
         pointerLocked = false;
-        enablePageScroll();
         checkCompletion();
         e.currentTarget?.releasePointerCapture?.(e.pointerId);
     }
@@ -144,7 +88,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
     function handlePointerCancel() {
         setIsDrawing(false);
         pointerLocked = false;
-        enablePageScroll();
+        checkCompletion();
     }
 
     function scratch(e) {
@@ -197,7 +141,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
     function completeReveal() {
         setIsScratched(true);
-        enablePageScroll();
         onScratchComplete?.();
 
         if (canvasRef.current) {
@@ -234,7 +177,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
 
     return (
         <div
-            ref={containerRef}
             className="relative mx-auto mt-8 mb-6 w-[240px] h-[160px] sm:w-[280px] sm:h-[180px] rounded-[50%] overflow-hidden shadow-inner border-[3px] border-[#C89585]"
             style={{ background: "#F5EFE6", zIndex: 30 }}
         >
