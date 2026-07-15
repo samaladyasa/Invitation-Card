@@ -16,6 +16,29 @@ export default function App() {
   const lenisRef = useRef(null);
 
   useLayoutEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+
+    html.style.overflow = "auto";
+    html.style.overflowX = "hidden";
+    html.style.height = "auto";
+    html.style.position = "";
+    html.style.top = "";
+    html.style.left = "";
+    html.style.width = "";
+    html.style.touchAction = "auto";
+    html.style.overscrollBehavior = "auto";
+
+    body.style.overflow = "auto";
+    body.style.overflowX = "hidden";
+    body.style.height = "auto";
+    body.style.position = "";
+    body.style.top = "";
+    body.style.left = "";
+    body.style.width = "";
+    body.style.touchAction = "auto";
+    body.style.overscrollBehavior = "auto";
+
     if (!scratched) {
       window.scrollTo(0, 0);
     }
