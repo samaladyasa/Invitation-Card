@@ -27,10 +27,21 @@ export default function Intro({ envelopeOpened, onEnvelopeOpened }) {
     if (!shouldPlayVideo || !videoRef.current) return;
 
     const video = videoRef.current;
+    const handleComplete = () => {
+      onEnvelopeOpened?.();
+    };
+
+    const timer = window.setTimeout(handleComplete, 4000);
+
     video.play().catch(() => {
       setVideoFailed(true);
+      handleComplete();
     });
-  }, [shouldPlayVideo]);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [shouldPlayVideo, onEnvelopeOpened]);
 
   return (
     <div
