@@ -31,7 +31,7 @@ export default function Intro({ envelopeOpened, onEnvelopeOpened }) {
       onEnvelopeOpened?.();
     };
 
-    const timer = window.setTimeout(handleComplete, 4000);
+    const timer = window.setTimeout(handleComplete, 6500);
 
     video.play().catch(() => {
       setVideoFailed(true);
@@ -55,13 +55,13 @@ export default function Intro({ envelopeOpened, onEnvelopeOpened }) {
       )}
       <video
         ref={videoRef}
-        src="https://res.cloudinary.com/abbjs8kr/video/upload/v1783839994/envelope_design_1__compressed_kwthd2.mp4"
+        src="https://res.cloudinary.com/htbk0ni0/video/upload/v1784117288/Conversation_with_Gemini___Cre_online-video-cutter.com_w1jizi.mp4"
         playsInline
         muted
-        preload="metadata"
+        preload="auto"
         onEnded={onEnvelopeOpened}
         className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-        style={{ objectPosition: '52.5% center' }}
+        style={{ objectPosition: '50% center' }}
       />
     </div>
   );
