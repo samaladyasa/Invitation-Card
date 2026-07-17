@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
+import details from "../../data/details.json";
 
 export default function ScratchPhoto({ onScratchComplete }) {
     const canvasRef = useRef(null);
@@ -34,7 +35,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
         canvas.style.height = `${rect.height}px`;
         canvas.style.touchAction = 'none';
 
-        // Do not disable page scroll on mount — only lock when the user starts scratching.
 
         const gradient = ctx.createLinearGradient(0, 0, rect.width, rect.height);
         gradient.addColorStop(0, "#D9A897");
@@ -184,7 +184,7 @@ export default function ScratchPhoto({ onScratchComplete }) {
             <div className="absolute inset-0 bg-[#E8D4C8] flex items-center justify-center">
                 { }
                 <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUsRcvC6C0sDaliuJghwTyPSVs7tEJbUZhzw6fstL_fY6Q_lMhzKlPP7oa&s=10"
+                    src={details.ovalPhoto || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUsRcvC6C0sDaliuJghwTyPSVs7tEJbUZhzw6fstL_fY6Q_lMhzKlPP7oa&s=10"}
                     alt="Couple"
                     loading="eager"
                     className="w-full h-full object-cover"
@@ -208,7 +208,6 @@ export default function ScratchPhoto({ onScratchComplete }) {
                 onPointerLeave={(e) => {
                     handlePointerCancel();
                 }}
-                // touch events are handled by native listeners added in useLayoutEffect
                 onTouchStart={(e) => {
                     handlePointerDown(e);
                 }}
