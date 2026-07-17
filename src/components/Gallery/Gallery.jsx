@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Image } from "lucide-react";
-mport details from "../../data/details.json";
+import details from "../../data/details.json";
 
 import galleryBgDesktop from "../../assets/gallerybd.png";
 import galleryBgMobile from "../../assets/gallerybm.png";
