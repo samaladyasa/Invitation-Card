@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { MapPin, ExternalLink, Sparkles } from "lucide-react";
 import { useRef } from "react";
-import venueData from "./venueData";
+import details from "../../data/details.json";
 
 import venueBgDesktop from "../../assets/venuebd.png";
 import venueBgMobile from "../../assets/venuebm.png";
@@ -31,14 +31,14 @@ export default function Venue() {
             <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-30">
               <span className="inline-block rounded-full px-8 py-3 text-xs uppercase tracking-[5px] shadow-lg" style={{ border: '1px solid rgba(0,0,0,0.06)', background: 'var(--bg-card)', color: 'var(--text-secondary)', boxShadow: '0 6px 14px rgba(0,0,0,0.1)' }}>Venue</span>
             </div>
-            <img src="/images/venue/venue.jpg" alt={venueData.name} loading="eager" className="h-[320px] w-full rounded-xl object-cover md:h-[430px]" />
+            <img src="/images/venue/venue.jpg" alt={details.venue} loading="eager" className="h-[320px] w-full rounded-xl object-cover md:h-[430px]" />
             <div className="pt-6 px-2">
-              <ScrollRevealText><h2 className="font-heading text-3xl md:text-4xl" style={{ color: 'var(--text-primary)' }}>{venueData.name}</h2></ScrollRevealText>
-              <ScrollRevealText delay={0.1}><p className="mt-3 flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}><MapPin size={18} style={{ color: 'var(--accent-pink-2)' }} />{venueData.location}</p></ScrollRevealText>
+              <ScrollRevealText><h2 className="font-heading text-3xl md:text-4xl" style={{ color: 'var(--text-primary)' }}>{details.venue}</h2></ScrollRevealText>
+              <ScrollRevealText delay={0.1}><p className="mt-3 flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}><MapPin size={18} style={{ color: 'var(--accent-pink-2)' }} />{details.venueLocation}</p></ScrollRevealText>
               <div className="my-6"><span className="block h-px w-full" style={{ backgroundColor: 'rgba(212,165,41,0.3)' }} /></div>
-              <ScrollRevealText delay={0.2}><p className="leading-7" style={{ color: 'var(--text-secondary)' }}>{venueData.address}</p></ScrollRevealText>
+              <ScrollRevealText delay={0.2}><p className="leading-7" style={{ color: 'var(--text-secondary)' }}>{details.venueAddress}</p></ScrollRevealText>
               <ScrollRevealText delay={0.3}>
-                <a href={venueData.mapLink} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300" style={{ border: '1px solid rgba(212,165,41,0.12)', color: 'var(--accent-pink-2)', background: 'transparent' }}>
+                <a href={details.venueMapLink} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300" style={{ border: '1px solid rgba(212,165,41,0.12)', color: 'var(--accent-pink-2)', background: 'transparent' }}>
                   View on Google Maps <ExternalLink size={14} />
                 </a>
               </ScrollRevealText>
