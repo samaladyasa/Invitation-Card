@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ZoomIn, Image } from "lucide-react";
+import details from "../../data/details.json";
 
 import galleryBgDesktop from "../../assets/gallerybd.png";
 import galleryBgMobile from "../../assets/gallerybm.png";
 
-const galleryImages = [
+const galleryImages = details.galleryImages || [
     { id: 1, src: 'https://plus.unsplash.com/premium_photo-1682092632793-c7d75b23718e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwd2VkZGluZyUyMHBob3RvZ3JhcGh5fGVufDB8fDB8fHww', alt: "Wedding moment 1" },
     { id: 2, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMbguuZ-GdzVb0PKQlU4hf_zSZFG0Vs7cT33eW-953Cg&s=10', alt: "Wedding moment 2" },
     { id: 3, src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVU5aGwdXJL0X0vlZghuH9GhwT3tiflLpbu133bT_1GP5QQGtkDaD5s9Xs&s=10', alt: "Wedding moment 3" },
@@ -28,7 +29,7 @@ function GalleryCard({ image, paused }) {
         >
             <div className="relative h-[220px] md:h-[260px] lg:h-[300px] overflow-hidden rounded-[1.25rem] border" style={{ borderColor: 'rgba(255,255,255,0.06)', backgroundColor: 'var(--bg-base)' }}>
                 {image.src ? (
-                    <img src={image.src} alt={image.alt} loading="eager" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <img src={image.src} alt={image.alt} loading="eager" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" style={{ pointerEvents: 'none' }} />
                 ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center" style={{ background: 'radial-gradient(circle at top, rgba(212,165,41,0.12), transparent 60%)' }}>
                         <Image size={34} className="" style={{ color: 'var(--accent-pink-2)', opacity: 0.3 }} />
