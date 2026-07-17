@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 import { useRef } from "react";
 import GoldDivider from "../Dividers/GoldDivider";
+import details from "../../data/details.json";
 
 import footerBgDesktop from "../../assets/footerbd.png";
 import footerBgMobile from "../../assets/footerbm.png";
@@ -33,7 +34,7 @@ export default function Footer() {
       <motion.div initial={{ opacity: 1, y: 0 }} style={{ y, opacity }} className="relative z-10 mx-auto max-w-2xl text-center">
         <GoldDivider className="mb-10" />
         <motion.p initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="text-lg italic font-semibold" style={{ color: 'var(--text-primary)' }}>With all our love,</motion.p>
-        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="mt-5 font-script text-6xl leading-none font-bold" style={{ color: 'var(--text-primary)' }}>Alisha & Anirudh</motion.h2>
+        <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="mt-5 font-script text-6xl leading-none font-bold" style={{ color: 'var(--text-primary)' }}>{details.bride} & {details.groom}</motion.h2>
         <p className="mx-auto mt-6 max-w-md leading-7 font-semibold" style={{ color: 'var(--text-primary)' }}>
           <RevealWords text="Thank you for celebrating with us. Your love, blessings and presence are the greatest gifts we could ask for." delay={0.3} />
         </p>
