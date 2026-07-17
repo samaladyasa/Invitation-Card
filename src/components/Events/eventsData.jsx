@@ -1,4 +1,4 @@
-import details from "../../data/details.json";
+mport details from "../../data/details.json";
 
 const eventsData = details.events;
 
