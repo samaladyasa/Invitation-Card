@@ -1,79 +1,27 @@
-{
-  "bride": "Alisha",
-  "groom": "Anirudh",
-  "weddingDate": "Tuesday, 15 December 2026",
-  "date": "15 December 2026",
-  "time": "7:00 PM",
-  "venue": "Mayfair Lagoon",
-  "venueLocation": "Bhubaneswar, Odisha",
-  "venueAddress": "Jaydev Vihar, Bhubaneswar, Odisha 751013",
-  "venueMapLink": "https://maps.app.goo.gl/qWrc5NyAFRxavbom8",
-  "brideRole": "Daughter of",
-  "brideParents": "Mr. and Mrs. Sharma",
-  "groomRole": "Son of",
-  "groomParents": "Mr. and Mrs. Singh",
-  "invitationMantra": "॥ ॐ गं गणपतये नमः ॥",
-  "invitationTitle": "Wedding Invitation",
-  "invitationMessage": "We joyfully invite you to the wedding of",
-  "invitationClosing": "With Love & Gratitude ❤️",
-  "dateAndPlace": "15 December 2026 · Mayfair Lagoon",
-  "events": [
-    {
-      "title": "Haldi Ceremony",
-      "date": "13 December 2026",
-      "time": "10:00 AM",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLcX76dgpNiaHUsTOB94kcW6QsiTTsFtQ3HQDPlGGvMw6B8GhC0PAs1Go&s=10"
-    },
-    {
-      "title": "Mehendi & Sangeet Ceremony",
-      "date": "14 December 2026",
-      "time": "6:00 PM",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoWvJN1Jou23LBo36bM61UlvneGRLon1IlCUjQwHGcQixtfwpL_seYCG9h&s=10"
-    },
-    {
-      "title": "Wedding Ceremony",
-      "date": "15 December 2026",
-      "time": "7:00 PM",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMbSOcByJkQkHFwmvT4T_1fDLQH5KmV5OnWQBjREcxXQ&s=10"
-    },
-    {
-      "title": "Reception",
-      "date": "16 December 2026",
-      "time": "7:30 PM",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEOtthtwKs6EYlrYp6tSye4UDF89ja8BW1CS8WesISpQ&s=10"
-    }
-  ],
-  "galleryImages": [
-    {
-      "id": 1,
-      "src": "https://plus.unsplash.com/premium_photo-1682092632793-c7d75b23718e?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW5kaWFuJTIwd2VkZGluZyUyMHBob3RvZ3JhcGh5fGVufDB8fDB8fHww",
-      "alt": "Wedding moment 1"
-    },
-    {
-      "id": 2,
-      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMbguuZ-GdzVb0PKQlU4hf_zSZFG0Vs7cT33eW-953Cg&s=10",
-      "alt": "Wedding moment 2"
-    },
-    {
-      "id": 3,
-      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVU5aGwdXJL0X0vlZghuH9GhwT3tiflLpbu133bT_1GP5QQGtkDaD5s9Xs&s=10",
-      "alt": "Wedding moment 3"
-    },
-    {
-      "id": 4,
-      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8nlo7LsKT73iN0JCEjX3tZV0GExtct4jMaZoJfbzkVOY8GmlmTFKyKX4&s=10",
-      "alt": "Wedding moment 4"
-    },
-    {
-      "id": 5,
-      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlCkrbeQ4-YwvSf7lxDOnbZxzudDi3hN_BH5EmpLgvyKAL--Tuxf8YjZ8&s=10",
-      "alt": "Wedding moment 5"
-    },
-    {
-      "id": 6,
-      "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlyc7Q_dTUJ74gClxW0KCpxquyC170IInDgfFQcPI3BxeBHe6ErYNr7NE&s=10",
-      "alt": "Wedding moment 6"
-    }
-  ],
-  "ovalPhoto": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUsRcvC6C0sDaliuJghwTyPSVs7tEJbUZhzw6fstL_fY6Q_lMhzKlPP7oa&s=10"
-}
+import details from "./details.json";
+
+const weddingData = {
+  hero: {
+    bride: details.bride,
+    groom: details.groom,
+    date: details.weddingDate,
+    invitation: "",
+    buttonText: "Open Invitation",
+  },
+
+  invitation: {
+    mantra: details.invitationMantra,
+    title: details.invitationTitle,
+    message: details.invitationMessage,
+    brideRole: details.brideRole,
+    brideParents: details.brideParents,
+    groomRole: details.groomRole,
+    groomParents: details.groomParents,
+    date: details.date,
+    time: details.time,
+    venue: details.venue,
+    closing: details.invitationClosing,
+  },
+};
+
+export default weddingData;
