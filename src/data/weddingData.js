@@ -1,32 +1,26 @@
+import details from "./details.json";
+
 const weddingData = {
   hero: {
-    bride: "Alisha",
-    groom: "Anirudh",
-    date: "Tuesday, 15 December 2026",
+    bride: details.bride,
+    groom: details.groom,
+    date: details.weddingDate,
     invitation: "",
     buttonText: "Open Invitation",
   },
 
   invitation: {
-    mantra: "॥ ॐ गं गणपतये नमः ॥",
-
-    title: "Wedding Invitation",
-
-    message:
-      "We joyfully invite you to the wedding of",
-
-    brideRole: "Daughter of",
-
-    brideParents: "Mr. and Mrs. Sharma",
-
-    groomRole: "Son of",
-
-    groomParents: "Mr. and Mrs. Singh",
-
-    date: "15 December 2026",
-    time: "7:00 PM",
-    venue: "Mayfair Lagoon",
-    closing: "With Love & Gratitude ❤️",
+    mantra: details.invitationMantra,
+    title: details.invitationTitle,
+    message: details.invitationMessage,
+    brideRole: details.brideRole,
+    brideParents: details.brideParents,
+    groomRole: details.groomRole,
+    groomParents: details.groomParents,
+    date: details.date,
+    time: details.time,
+    venue: details.venue,
+    closing: details.invitationClosing,
   },
 };
 
