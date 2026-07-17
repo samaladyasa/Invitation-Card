@@ -2,7 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 import { useRef } from "react";
 import GoldDivider from "../Dividers/GoldDivider";
-import details from "../../data/details.json";
+mport details from "../../data/details.json";
 
 import footerBgDesktop from "../../assets/footerbd.png";
 import footerBgMobile from "../../assets/footerbm.png";
