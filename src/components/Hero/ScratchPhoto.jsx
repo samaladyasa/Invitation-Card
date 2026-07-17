@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
-mport details from "../../data/details.json";
+import details from "../../data/details.json";
 
 export default function ScratchPhoto({ onScratchComplete }) {
     const canvasRef = useRef(null);
